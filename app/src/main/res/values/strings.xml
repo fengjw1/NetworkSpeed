@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NetworkSpeed</string>
+    <string name="title_activity_download">DownloadActivity</string>
 </resources>

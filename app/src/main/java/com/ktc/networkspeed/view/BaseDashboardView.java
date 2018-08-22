@@ -95,13 +95,13 @@ public abstract class BaseDashboardView extends View {
     private final static String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
 
     // 数值画笔属性
-    private final static float DEFAULT_VALUE_TEXT_SIZE = 60f;
+    private final static float DEFAULT_VALUE_TEXT_SIZE = 45f;
     private final static int DEFAULT_VALUE_TEXT_COLOR = Color.WHITE;
     // 数值等级画笔属性
     private final static float DEFAULT_VALUE_LEVEL_TEXT_SIZE = 25f;
     private final static int DEFAULT_VALUE_LEVEL_COLOR = Color.WHITE;
     // 时间画笔属性
-    private final static float DEFAULT_DATE_TEXT_SIZE = 10f;
+    private final static float DEFAULT_DATE_TEXT_SIZE = 25f;
     private final static int DEFAULT_DATE_TEXT_COLOR = Color.WHITE;
 
 

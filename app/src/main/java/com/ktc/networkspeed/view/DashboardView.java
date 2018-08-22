@@ -57,21 +57,21 @@ public class DashboardView extends BaseDashboardView {
     private static final int DEFAULT_ARC_SPACING = 60;
     //外环的默认属性
     private static final int DEFAULT_OUTER_ARC_WIDTH = 3;
-    private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(80, 255, 255, 255);
+    private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(80, 220, 220, 220);
     //内环的默认属性
     private static final int DEFAULT_INNER_ARC_WIDTH = 10;
-    private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(80, 255, 255, 255);
+    private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(80, 220, 220, 220);
     //进度环的默认属性
-    private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 255, 255, 255);
+    private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 255, 69, 0);
     //进度点的默认属性
     private static final float DEFAULT_PROGRESS_POINT_RADIUS = 10;
-    private static final int DEFAULT_PROGRESS_POINT_COLOR = Color.WHITE;
+    private static final int DEFAULT_PROGRESS_POINT_COLOR = Color.argb(255, 255, 0, 0);
     // 大刻度画笔默认值
     private final static float DEFAULT_LARGE_CALIBRATION_WIDTH = 2f;
-    private final static int DEFAULT_LARGE_CALIBRATION_COLOR = Color.argb(200, 255, 255, 255);
+    private final static int DEFAULT_LARGE_CALIBRATION_COLOR = Color.argb(200, 220, 220, 220);
     // 小刻度画笔默认值
     private final static float DEFAULT_SMALL_CALIBRATION_WIDTH = 0.5f;
-    private final static int DEFAULT_SMALL_CALIBRATION_COLOR = Color.argb(100, 255, 255, 255);
+    private final static int DEFAULT_SMALL_CALIBRATION_COLOR = Color.argb(100, 192, 192, 192);
     // 默认刻度文字画笔参数
     private final static float DEFAULT_CALIBRATION_TEXT_TEXT_SIZE = 10f;
     private final static int DEFAULT_CALIBRATION_TEXT_TEXT_COLOR = Color.WHITE;
@@ -291,7 +291,7 @@ public class DashboardView extends BaseDashboardView {
         mPaintIndicator.setStyle(Paint.Style.FILL);
         canvas.drawPath(mIndicatorPath, mPaintIndicator);
         mPaintIndicator.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(mRadius, mIndicatorStart + dp2px(6) + 28, dp2px(6), mPaintIndicator);
+        canvas.drawCircle(mRadius, mIndicatorStart + dp2px(6) + 14, dp2px(6), mPaintIndicator);
         canvas.restore();
     }
 
@@ -302,7 +302,7 @@ public class DashboardView extends BaseDashboardView {
     protected void drawText(Canvas canvas, float value, String valueLevel, String currentTime) {
         //绘制数值
         float marginTop = mRadius + mTextSpacing;
-        DecimalFormat decimalFormat = new DecimalFormat(".00");
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
         canvas.drawText(String.valueOf(decimalFormat.format(value)) + " Mbps", mRadius, marginTop, mPaintValue);
 
         //绘制数值文字信息
