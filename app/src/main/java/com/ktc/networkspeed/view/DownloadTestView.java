@@ -1,4 +1,4 @@
-package com.ktc.networkspeed;
+package com.ktc.networkspeed.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,13 +6,12 @@ import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.ktc.networkspeed.R;
 import com.ktc.networkspeed.model.HttpDownloadModel;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
-import com.ktc.networkspeed.view.DashboardView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,8 +25,6 @@ public class DownloadTestView extends PopupWindow {
     private View contextView;
 
     private DashboardView mDashboardView;
-
-    private static final int UPDATE_SPEED = 0x01;
 
     private GetSpeedTestHostsHandler mSpeedTestHostsHandler;
     private boolean downloadTestStarted = false;
@@ -47,8 +44,11 @@ public class DownloadTestView extends PopupWindow {
         int h = mContext.getWindowManager().getDefaultDisplay().getHeight();
         int w = mContext.getWindowManager().getDefaultDisplay().getWidth();
         this.setContentView(contextView);
-        this.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-        this.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        this.setWidth(w * 3 / 5);
+        this.setHeight(h * 3 / 5);
+//        this.setWidth(800);
+//        this.setHeight(800);
+        this.setOutsideTouchable(true);
 
         init();
 

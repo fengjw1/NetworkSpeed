@@ -81,7 +81,7 @@ public abstract class BaseDashboardView extends View {
     // 进度动画时长
     private final static long DEFAULT_PROGRESS_ANIM_TIME = 100;
     // 默认边距
-    private final static int DEFAULT_PADDING = 10;
+    private final static int DEFAULT_PADDING = 3;
     // 默认刻度文字
     private final static float[] DEFAULT_CALIBRATION_NUMBER = new float[]{0, 0.25f, 0.5f, 1.0f, 2, 5, 10, 20, 50, 100};
     private final static String[] DEFAULT_CALIBRATION_BETWEEN = new String[]{"较差", "中等", "良好", "优秀", "极好", "最好", "", "", "", "",};
@@ -98,7 +98,7 @@ public abstract class BaseDashboardView extends View {
     private final static float DEFAULT_VALUE_TEXT_SIZE = 45f;
     private final static int DEFAULT_VALUE_TEXT_COLOR = Color.WHITE;
     // 数值等级画笔属性
-    private final static float DEFAULT_VALUE_LEVEL_TEXT_SIZE = 25f;
+    private final static float DEFAULT_VALUE_LEVEL_TEXT_SIZE = 30f;
     private final static int DEFAULT_VALUE_LEVEL_COLOR = Color.WHITE;
     // 时间画笔属性
     private final static float DEFAULT_DATE_TEXT_SIZE = 25f;
@@ -166,7 +166,7 @@ public abstract class BaseDashboardView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //屏幕宽高
-        mWidth = w;
+        mWidth = 700;
         mHeight = h;
         //半径
         mRadius = mWidth / 2;

@@ -54,12 +54,12 @@ public class DashboardView extends BaseDashboardView {
     private float mCalibrationTextStart;
 
     //默认圆环之间间距
-    private static final int DEFAULT_ARC_SPACING = 60;
+    private static final int DEFAULT_ARC_SPACING = 30;
     //外环的默认属性
-    private static final int DEFAULT_OUTER_ARC_WIDTH = 3;
+    private static final int DEFAULT_OUTER_ARC_WIDTH = 1;
     private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(80, 220, 220, 220);
     //内环的默认属性
-    private static final int DEFAULT_INNER_ARC_WIDTH = 10;
+    private static final int DEFAULT_INNER_ARC_WIDTH = 1;
     private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(80, 220, 220, 220);
     //进度环的默认属性
     private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 255, 69, 0);
