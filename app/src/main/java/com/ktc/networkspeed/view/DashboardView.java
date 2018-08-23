@@ -11,6 +11,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.text.DecimalFormat;
 
@@ -56,8 +57,8 @@ public class DashboardView extends BaseDashboardView {
     //默认圆环之间间距
     private static final int DEFAULT_ARC_SPACING = 30;
     //外环的默认属性
-    private static final int DEFAULT_OUTER_ARC_WIDTH = 1;
-    private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(80, 220, 220, 220);
+    private static final int DEFAULT_OUTER_ARC_WIDTH = 15;
+    private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(0, 220, 220, 220);
     //内环的默认属性
     private static final int DEFAULT_INNER_ARC_WIDTH = 1;
     private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(80, 220, 220, 220);
@@ -70,21 +71,21 @@ public class DashboardView extends BaseDashboardView {
     private final static float DEFAULT_LARGE_CALIBRATION_WIDTH = 2f;
     private final static int DEFAULT_LARGE_CALIBRATION_COLOR = Color.argb(200, 220, 220, 220);
     // 小刻度画笔默认值
-    private final static float DEFAULT_SMALL_CALIBRATION_WIDTH = 0.5f;
+    private final static float DEFAULT_SMALL_CALIBRATION_WIDTH = 0.7f;
     private final static int DEFAULT_SMALL_CALIBRATION_COLOR = Color.argb(100, 192, 192, 192);
     // 默认刻度文字画笔参数
     private final static float DEFAULT_CALIBRATION_TEXT_TEXT_SIZE = 10f;
     private final static int DEFAULT_CALIBRATION_TEXT_TEXT_COLOR = Color.WHITE;
 
 
-    //指示器画笔
-    private Paint mPaintIndicator;
-    //指示器的path
-    private Path mIndicatorPath;
-    //指示器的起始位置
-    private float mIndicatorStart;
-    //指示器默认属性
-    private static final int DEFAULT_INDICATOR_COLOR = Color.argb(200, 255, 255, 255);
+//    //指示器画笔
+//    private Paint mPaintIndicator;
+//    //指示器的path
+//    private Path mIndicatorPath;
+//    //指示器的起始位置
+//    private float mIndicatorStart;
+//    //指示器默认属性
+//    private static final int DEFAULT_INDICATOR_COLOR = Color.argb(200, 255, 255, 255);
 
 
     public DashboardView(Context context) {
@@ -151,11 +152,11 @@ public class DashboardView extends BaseDashboardView {
         //进度点的图片
         mProgressPointPosition = new float[2];
 
-        //指示器画笔
-        mPaintIndicator = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintIndicator.setStrokeCap(Paint.Cap.SQUARE);
-        mPaintIndicator.setColor(DEFAULT_INDICATOR_COLOR);
-        mPaintIndicator.setStrokeWidth(dp2px(3));
+//        //指示器画笔
+//        mPaintIndicator = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        mPaintIndicator.setStrokeCap(Paint.Cap.SQUARE);
+//        mPaintIndicator.setColor(DEFAULT_INDICATOR_COLOR);
+//        mPaintIndicator.setStrokeWidth(dp2px(3));
     }
 
     /**
@@ -178,19 +179,19 @@ public class DashboardView extends BaseDashboardView {
                 mRectOuterArc.right - mArcSpacing , mRectOuterArc.bottom - mArcSpacing);//left 和 top加的原因是都是负数
 
         //计算刻度位置
-        mCalibrationStart = mRectOuterArc.top + mArcSpacing - mPaintInnerArc.getStrokeWidth() / 2;
-        mCalibrationEnd = mCalibrationStart + mPaintInnerArc.getStrokeWidth();
+        mCalibrationStart = mRectOuterArc.top - mArcSpacing + mPaintOuterArc.getStrokeWidth() / 2; //这个是刻度的阴影线
+        mCalibrationEnd = mCalibrationStart + mPaintOuterArc.getStrokeWidth();
 
         //刻度文字位置
         mCalibrationTextStart = mCalibrationEnd + dp2px(13);
 
         //指示器路径
-        mIndicatorStart = mRectInnerArc.top + 10;
-        mIndicatorPath = new Path();
-        mIndicatorPath.moveTo(mRadius, mIndicatorStart);
-        mIndicatorPath.rLineTo(-dp2px(6), dp2px(15));
-        mIndicatorPath.rLineTo(dp2px(12), 0);
-        mIndicatorPath.close();
+//        mIndicatorStart = mRectInnerArc.top + 10;
+//        mIndicatorPath = new Path();
+//        mIndicatorPath.moveTo(mRadius, mIndicatorStart);
+//        mIndicatorPath.rLineTo(-dp2px(6), dp2px(15));
+//        mIndicatorPath.rLineTo(dp2px(12), 0);
+//        mIndicatorPath.close();
     }
 
     /**
@@ -199,10 +200,12 @@ public class DashboardView extends BaseDashboardView {
     @Override
     protected void drawArc(Canvas canvas, float arcStartAngle, float arcSweepAngle) {
         //绘制外环
-        mPaintOuterArc.setColor(mOuterArcColor);
-        canvas.drawArc(mRectOuterArc, arcStartAngle, arcSweepAngle, false, mPaintOuterArc);
-
+//        mPaintOuterArc.setColor(mOuterArcColor);
+//        canvas.drawArc(mRectOuterArc, arcStartAngle, arcSweepAngle, false, mPaintOuterArc);
         //绘制内环
+//        canvas.translate(mWidth / 2, mHeight / 2);
+        Log.d("fengjw1", "mWidth1 = " + mWidth + " mHeight1 = " + mHeight);
+        canvas.translate((960 - mWidth) / 2, (540 - mHeight) / 2);
         canvas.drawArc(mRectInnerArc, arcStartAngle, arcSweepAngle, false, mPaintInnerArc);
 
         //绘制刻度
@@ -273,26 +276,26 @@ public class DashboardView extends BaseDashboardView {
         }
         Path path = new Path();
         //添加进度圆环的区域
-        path.addArc(mRectOuterArc, arcStartAngle, progressSweepAngle);
+        path.addArc(mRectInnerArc, arcStartAngle, progressSweepAngle);
         //计算切线值和为重
         PathMeasure pathMeasure = new PathMeasure(path, false);
         pathMeasure.getPosTan(pathMeasure.getLength(), mProgressPointPosition, null);
         //绘制圆环
-        mPaintOuterArc.setColor(mProgressArcColor);
-        canvas.drawPath(path, mPaintOuterArc);
+//        mPaintInnerArc.setColor(mProgressArcColor);
+//        canvas.drawPath(path, mPaintInnerArc);
         //绘制进度点
         if(mProgressPointPosition[0] != 0 && mProgressPointPosition[1] != 0) {
             canvas.drawCircle(mProgressPointPosition[0], mProgressPointPosition[1], mProgressPointRadius, mPaintProgressPoint);
         }
 
         //绘制指针
-        canvas.save();
-        canvas.rotate(arcStartAngle + progressSweepAngle - 270, mRadius, mRadius);
-        mPaintIndicator.setStyle(Paint.Style.FILL);
-        canvas.drawPath(mIndicatorPath, mPaintIndicator);
-        mPaintIndicator.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(mRadius, mIndicatorStart + dp2px(6) + 14, dp2px(6), mPaintIndicator);
-        canvas.restore();
+//        canvas.save();
+//        canvas.rotate(arcStartAngle + progressSweepAngle - 270, mRadius, mRadius);
+//        mPaintIndicator.setStyle(Paint.Style.FILL);
+//        canvas.drawPath(mIndicatorPath, mPaintIndicator);
+//        mPaintIndicator.setStyle(Paint.Style.STROKE);
+//        canvas.drawCircle(mRadius, mIndicatorStart + dp2px(6) + 14, dp2px(6), mPaintIndicator);
+//        canvas.restore();
     }
 
     /**

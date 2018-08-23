@@ -11,7 +11,9 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
@@ -86,7 +88,7 @@ public abstract class BaseDashboardView extends View {
     private final static float[] DEFAULT_CALIBRATION_NUMBER = new float[]{0, 0.25f, 0.5f, 1.0f, 2, 5, 10, 20, 50, 100};
     private final static String[] DEFAULT_CALIBRATION_BETWEEN = new String[]{"较差", "中等", "良好", "优秀", "极好", "最好", "", "", "", "",};
     // 默认刻度数量
-    private final static int DEFAULT_LARGE_BETWEEN_CALIBRATION_NUMBER = 10;//这个参数用来表示大刻度间的小刻度数目
+    private final static int DEFAULT_LARGE_BETWEEN_CALIBRATION_NUMBER = 3;//这个参数用来表示大刻度间的小刻度数目
     // 默认控件大小
     private final static int DEFAULT_SIZE = 250;
     //中间文字之间的间距
@@ -166,8 +168,9 @@ public abstract class BaseDashboardView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         //屏幕宽高
-        mWidth = 700;
+        mWidth = w;
         mHeight = h;
+        Log.d("fengjw1", "mWidth = " + mWidth + " mHeight = " + mHeight);
         //半径
         mRadius = mWidth / 2;
 
@@ -208,7 +211,6 @@ public abstract class BaseDashboardView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         //绘制圆环
         drawArc(canvas, mArcStartAngle, mArcSweepAngle);
 

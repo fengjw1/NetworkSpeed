@@ -9,9 +9,8 @@
 
     <com.ktc.networkspeed.view.DashboardView
         android:id="@+id/dv"
-        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="60dp"
+        android:padding="60dp"
         android:layout_width="600dp"
         android:layout_height="420dp"/>
 

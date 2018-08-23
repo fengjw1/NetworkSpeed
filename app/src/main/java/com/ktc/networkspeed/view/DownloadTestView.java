@@ -40,14 +40,14 @@ public class DownloadTestView extends PopupWindow {
     private void initPopupWindow(){
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contextView = inflater.inflate(R.layout.activity_download, null);
-        contextView.setZ(5f);
+        contextView.setZ(10f);
         int h = mContext.getWindowManager().getDefaultDisplay().getHeight();
         int w = mContext.getWindowManager().getDefaultDisplay().getWidth();
         this.setContentView(contextView);
-        this.setWidth(w * 3 / 5);
-        this.setHeight(h * 3 / 5);
-//        this.setWidth(800);
-//        this.setHeight(800);
+//        this.setWidth(w * 1 / 2);
+//        this.setHeight(h * 1 / 2);
+        this.setWidth(1000);
+        this.setHeight(800);
         this.setOutsideTouchable(true);
 
         init();
@@ -58,6 +58,9 @@ public class DownloadTestView extends PopupWindow {
         tempBlackList = new HashSet<>();
         final DecimalFormat dec = new DecimalFormat("#.##");
         mDashboardView = contextView.findViewById(R.id.dv);
+        int[] location = new int[2];
+        mDashboardView.getLocationOnScreen(location);
+        Log.d("fengjw1", "location : " + location[0] + " " + location[1]);
         mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
         mSpeedTestHostsHandler.start();
 
