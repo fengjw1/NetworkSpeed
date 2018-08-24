@@ -77,9 +77,9 @@ public abstract class BaseDashboardView extends View {
     protected Paint mPaintDate;
 
     // 圆环起始角度
-    private final static float DEFAULT_ARC_START_ANGLE = 165f;
+    private final static float DEFAULT_ARC_START_ANGLE = 150f;
     // 圆环范围大小
-    private final static float DEFAULT_ARC_SWEEP_ANGLE = 210f;
+    private final static float DEFAULT_ARC_SWEEP_ANGLE = 240f;
     // 进度动画时长
     private final static long DEFAULT_PROGRESS_ANIM_TIME = 100;
     // 默认边距

@@ -6,13 +6,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.TextView;
 
+import java.lang.annotation.Target;
 import java.text.DecimalFormat;
 
 /**
@@ -34,8 +38,12 @@ public class DashboardView extends BaseDashboardView {
     protected Paint mPaintCalibrationBetweenText;
     //大刻度画笔
     protected Paint mPaintLargeCalibration;
+    //大刻度进度画笔
+    protected Paint mPaintProgressLargeCalibration;
     //小刻度画笔
     protected Paint mPaintSmallCalibration;
+    //小刻度进度画笔
+    protected Paint mPaintProgressSmallCalibration;
     //外环区域
     private RectF mRectOuterArc;
     //内环区域
@@ -60,10 +68,10 @@ public class DashboardView extends BaseDashboardView {
     private static final int DEFAULT_OUTER_ARC_WIDTH = 15;
     private static final int DEFAULT_OUTER_ARC_COLOR = Color.argb(0, 220, 220, 220);
     //内环的默认属性
-    private static final int DEFAULT_INNER_ARC_WIDTH = 1;
-    private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(80, 220, 220, 220);
+    private static final float DEFAULT_INNER_ARC_WIDTH = 0.2f;
+    private static final int DEFAULT_INNER_ARC_COLOR = Color.argb(50, 0, 1, 0);
     //进度环的默认属性
-    private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 255, 69, 0);
+    private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 112, 34, 22);
     //进度点的默认属性
     private static final float DEFAULT_PROGRESS_POINT_RADIUS = 10;
     private static final int DEFAULT_PROGRESS_POINT_COLOR = Color.argb(255, 255, 0, 0);
@@ -74,9 +82,16 @@ public class DashboardView extends BaseDashboardView {
     private final static float DEFAULT_SMALL_CALIBRATION_WIDTH = 0.7f;
     private final static int DEFAULT_SMALL_CALIBRATION_COLOR = Color.argb(100, 192, 192, 192);
     // 默认刻度文字画笔参数
-    private final static float DEFAULT_CALIBRATION_TEXT_TEXT_SIZE = 10f;
-    private final static int DEFAULT_CALIBRATION_TEXT_TEXT_COLOR = Color.WHITE;
+    private final static float DEFAULT_CALIBRATION_TEXT_TEXT_SIZE = 16f;
+//    private final static int DEFAULT_CALIBRATION_TEXT_TEXT_COLOR = Color.WHITE;
+    private final static int DEFAULT_CALIBRATION_TEXT_TEXT_COLOR = Color.argb(255, 230, 230, 250);
 
+    //内心圆是一个颜色辐射渐变的圆
+    private Shader mInnerShader;
+    private Paint mInnerPaint;
+
+    //"MB/S" 画笔
+    private Paint mUnitPaint;
 
 //    //指示器画笔
 //    private Paint mPaintIndicator;
@@ -132,10 +147,20 @@ public class DashboardView extends BaseDashboardView {
         mPaintLargeCalibration.setStrokeWidth(dp2px(DEFAULT_LARGE_CALIBRATION_WIDTH));
         mPaintLargeCalibration.setColor(DEFAULT_LARGE_CALIBRATION_COLOR);
 
+        //大刻度画笔
+        mPaintProgressLargeCalibration = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintProgressLargeCalibration.setStrokeWidth(dp2px(DEFAULT_LARGE_CALIBRATION_WIDTH));
+        mPaintProgressLargeCalibration.setColor(DEFAULT_PROGRESS_POINT_COLOR);
+
         //小刻度画笔
         mPaintSmallCalibration = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintSmallCalibration.setStrokeWidth(dp2px(DEFAULT_SMALL_CALIBRATION_WIDTH));
         mPaintSmallCalibration.setColor(DEFAULT_SMALL_CALIBRATION_COLOR);
+
+        //小刻度画笔
+        mPaintProgressSmallCalibration = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintProgressSmallCalibration.setStrokeWidth(dp2px(DEFAULT_SMALL_CALIBRATION_WIDTH));
+        mPaintProgressSmallCalibration.setColor(DEFAULT_PROGRESS_POINT_COLOR);
 
         //刻度文字画笔
         mPaintCalibrationText = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -151,6 +176,17 @@ public class DashboardView extends BaseDashboardView {
 
         //进度点的图片
         mProgressPointPosition = new float[2];
+
+        //内部变色圆
+        mInnerPaint = new Paint();
+        mInnerPaint.setStyle(Paint.Style.FILL);
+        mInnerPaint.setAntiAlias(true);
+
+        //"MB/S" 画笔
+        mUnitPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mUnitPaint.setTextAlign(Paint.Align.CENTER);
+        mUnitPaint.setTextSize(sp2px(25f));
+        mUnitPaint.setColor(Color.argb(80, 211, 211, 211));
 
 //        //指示器画笔
 //        mPaintIndicator = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -213,6 +249,26 @@ public class DashboardView extends BaseDashboardView {
 
         //绘制刻度中间的文字
         drawableCalibrationBetweenText(canvas, arcStartAngle);
+
+        int w = (960 - mWidth) / 2;
+        int h = (540 - mHeight) / 2;
+        int radius = mRadius + 100;
+        drawInnerCricle(w + 400, h + 500, radius - 220, canvas, arcStartAngle, arcSweepAngle, false, mPaintInnerArc);
+
+    }
+
+    /**
+     * 画内部渐变颜色圆
+     */
+    private void drawInnerCricle(float dx, float dy,int radius, Canvas canvas, float arcStartAngle, float arcSweepAngle, boolean useCenter, Paint paint){
+        mInnerShader = new RadialGradient(dx,dy,radius, Color.parseColor("#808080"),
+                Color.parseColor("#000100"),Shader.TileMode.CLAMP);
+        mInnerPaint.setShader(mInnerShader);
+        canvas.save();
+//        canvas.drawCircle(dx, dy, radius, mInnerPaint);
+        canvas.drawArc(mRectInnerArc, arcStartAngle, arcSweepAngle, useCenter, mInnerPaint);
+        canvas.restore();
+
     }
 
     /**
@@ -288,6 +344,9 @@ public class DashboardView extends BaseDashboardView {
             canvas.drawCircle(mProgressPointPosition[0], mProgressPointPosition[1], mProgressPointRadius, mPaintProgressPoint);
         }
 
+
+        drawProgressCalibration(canvas, arcStartAngle, progressSweepAngle);
+
         //绘制指针
 //        canvas.save();
 //        canvas.rotate(arcStartAngle + progressSweepAngle - 270, mRadius, mRadius);
@@ -298,16 +357,49 @@ public class DashboardView extends BaseDashboardView {
 //        canvas.restore();
     }
 
+    protected void drawProgressCalibration(Canvas canvas, float arcStartAngle, float progressSweepAngle){
+        if(mLargeCalibrationNumber == 0){
+            return;
+        }
+        //旋转画布
+        canvas.save();
+        canvas.rotate(arcStartAngle - 270, mRadius, mRadius);
+        int mod = mLargeBetweenCalibrationNumber + 1;
+        int tmp = (int)((progressSweepAngle / mSmallCalibrationBetweenAngle) + 0.5f);
+        Log.d("fengjw", "tmp : " + tmp);
+        //遍历数量
+        for (int i = 0; i < tmp + 1; i++) {
+            //绘制刻度线
+            if(i % mod == 0){
+                canvas.drawLine(mRadius, mCalibrationStart, mRadius, mCalibrationEnd, mPaintProgressLargeCalibration);
+                //绘制刻度文字
+                int index = i / mod;
+                if(mCalibrationNumberText != null && mCalibrationNumberText.length > index){
+                    canvas.drawText(String.valueOf(mCalibrationNumberText[index]), mRadius, mCalibrationTextStart, mPaintCalibrationText);
+                }
+            } else {
+                canvas.drawLine(mRadius, mCalibrationStart, mRadius, mCalibrationEnd, mPaintProgressSmallCalibration);
+            }
+            //旋转
+            canvas.rotate(mSmallCalibrationBetweenAngle, mRadius, mRadius);
+        }
+        canvas.restore();
+    }
+
     /**
      * 绘制文本
      */
     @Override
     protected void drawText(Canvas canvas, float value, String valueLevel, String currentTime) {
         //绘制数值
+        canvas.save();
         float marginTop = mRadius + mTextSpacing;
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        canvas.drawText(String.valueOf(decimalFormat.format(value)) + " Mbps", mRadius, marginTop, mPaintValue);
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        if (!TextUtils.isEmpty((String.valueOf(value)))){
+            canvas.drawText(String.valueOf(decimalFormat.format(value)), mRadius, marginTop, mPaintValue);
 
+            canvas.drawText("MB/S", mRadius, marginTop + getPaintHeight(mUnitPaint, "MB/S")+ mTextSpacing, mUnitPaint);
+        }
         //绘制数值文字信息
         if(!TextUtils.isEmpty(valueLevel)){
             marginTop = marginTop + getPaintHeight(mPaintValueLevel, valueLevel) + mTextSpacing;
@@ -315,10 +407,11 @@ public class DashboardView extends BaseDashboardView {
         }
 
         //绘制日期
-        if(!TextUtils.isEmpty(currentTime)) {
-            marginTop = marginTop + getPaintHeight(mPaintDate, currentTime) + mTextSpacing;
-            canvas.drawText(currentTime, mRadius, marginTop, mPaintDate);
-        }
+//        if(!TextUtils.isEmpty(currentTime)) {
+//            marginTop = marginTop + getPaintHeight(mPaintDate, currentTime) + mTextSpacing;
+//            canvas.drawText(currentTime, mRadius, marginTop, mPaintDate);
+//        }
+        canvas.restore();
     }
 
     /**

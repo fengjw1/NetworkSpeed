@@ -1,4 +1,7 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">NetworkSpeed</string>
     <string name="title_activity_download">DownloadActivity</string>
+    <string name="select_address">Selecting the server best closed to you...</string>
+    <string name="not_connection">No Connection...</string>
+    <string name="server_address">Server from <xliff:g id="1">%s</xliff:g> (<xliff:g id="2">%s</xliff:g>) [<xliff:g id="3">%s</xliff:g> km]</string>
 </resources>

@@ -1,17 +1,20 @@
-package com.ktc.networkspeed.view;
+package com.ktc.networkspeed.popupwindow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.ktc.networkspeed.R;
 import com.ktc.networkspeed.model.HttpDownloadModel;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
+import com.ktc.networkspeed.view.DashboardView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class DownloadTestView extends PopupWindow {
+public class DownloadTestPopupWindow extends PopupWindow {
 
     private Activity mContext;
     private View contextView;
@@ -31,8 +34,9 @@ public class DownloadTestView extends PopupWindow {
     private boolean downloadTestFinished = false;
     private final List<Double> downloadRateList = new ArrayList<>();
     private HashSet<String> tempBlackList;
+    private TextView addressTv;
 
-    public DownloadTestView(final Activity context){
+    public DownloadTestPopupWindow(final Activity context){
         mContext = context;
         this.initPopupWindow();
     }
@@ -41,8 +45,8 @@ public class DownloadTestView extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contextView = inflater.inflate(R.layout.activity_download, null);
         contextView.setZ(10f);
-        int h = mContext.getWindowManager().getDefaultDisplay().getHeight();
-        int w = mContext.getWindowManager().getDefaultDisplay().getWidth();
+//        int h = mContext.getWindowManager().getDefaultDisplay().getHeight();
+//        int w = mContext.getWindowManager().getDefaultDisplay().getWidth();
         this.setContentView(contextView);
 //        this.setWidth(w * 1 / 2);
 //        this.setHeight(h * 1 / 2);
@@ -56,8 +60,11 @@ public class DownloadTestView extends PopupWindow {
 
     private void init(){
         tempBlackList = new HashSet<>();
-        final DecimalFormat dec = new DecimalFormat("#.##");
+
         mDashboardView = contextView.findViewById(R.id.dv);
+        addressTv = contextView.findViewById(R.id.address_tv);
+
+
         int[] location = new int[2];
         mDashboardView.getLocationOnScreen(location);
         Log.d("fengjw1", "location : " + location[0] + " " + location[1]);
@@ -84,6 +91,12 @@ public class DownloadTestView extends PopupWindow {
                         e.printStackTrace();
                     }
                     if (tiemCount <= 0){
+                        mContext.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                addressTv.setText(R.string.not_connection);
+                            }
+                        });
                         mSpeedTestHostsHandler = null;
                         return;
                     }
@@ -123,6 +136,21 @@ public class DownloadTestView extends PopupWindow {
                 final List<String> info = mapValue.get(findServerIndex);
                 final double distance = dist;
                 Log.d("fengjw", "uploadAddr : " + uploadAddr);
+
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String str = String.format(mContext.getResources().getString(R.string.server_address), info.get(5).toString(), info.get(3).toString(),
+                                new DecimalFormat("#.##").format(distance / 1000).toString());
+                        addressTv.setText(str);
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 final HttpDownloadModel downloadModel = new HttpDownloadModel(
                         uploadAddr.replace(uploadAddr.split("/")[uploadAddr.split("/").length - 1], ""));
 

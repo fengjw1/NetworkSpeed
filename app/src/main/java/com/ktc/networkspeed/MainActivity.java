@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.PopupWindow;
 
-import com.ktc.networkspeed.view.DownloadTestView;
+import com.ktc.networkspeed.popupwindow.DownloadTestPopupWindow;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     //tmp
     private Button mButton;
     private Activity mContext;
+
+    private DownloadTestPopupWindow mDownloadTestPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +32,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+
+        mDownloadTestPopupWindow = new DownloadTestPopupWindow(MainActivity.this);
+        mDownloadTestPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1f);
+            }
+        });
+
         mButton = findViewById(R.id.btn);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DownloadTestView downloadTestView = new DownloadTestView(MainActivity.this);
-                downloadTestView.showAtLocation(mContext.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+                mDownloadTestPopupWindow.showAtLocation(mContext.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+                backgroundAlpha(0.5f);
             }
         });
+    }
+
+
+    /**
+     * 设置屏幕背景透明度
+     */
+    private void backgroundAlpha(float bgAlpha){
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        getWindow().setAttributes(lp);
     }
 
 }
