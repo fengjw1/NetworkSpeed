@@ -1,13 +1,23 @@
 package com.ktc.networkspeed.utils;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 
 public class AnimUtils {
 
     private static AlphaAnimation mHideAnimation;
     private static AlphaAnimation mShowAnimation;
+
+    //
+    private static TranslateAnimation sTranslateAnimation;
+    private static AlphaAnimation sAlphaAnimation;
+    private static AnimatorSet sAnimatorSet;
 
     public static void setHideAnimation(final View[] views, int duration){
         if (views.length == 0 || duration < 0){
@@ -78,6 +88,23 @@ public class AnimUtils {
             views[i].startAnimation(mShowAnimation);
         }
 
+    }
+
+    public static void setStartTranslate(final View view, int duration, int tag){
+        view.setVisibility(View.VISIBLE);
+        ObjectAnimator animator, animator1;
+        if (tag < 3) {
+            animator = ObjectAnimator.ofFloat(view, "TranslationX", -200, 0);
+            animator1 = ObjectAnimator.ofFloat(view, "TranslationY", 0, 0);
+        }else {
+            animator = ObjectAnimator.ofFloat(view, "TranslationX", 0, 0);
+            animator1 = ObjectAnimator.ofFloat(view, "TranslationY", 800, 0);
+        }
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(view, "alpha", 0, 1);
+        sAnimatorSet = new AnimatorSet();
+        sAnimatorSet.playTogether(animator, animator1, animator2);
+        sAnimatorSet.setDuration(duration);
+        sAnimatorSet.start();
     }
 
 }

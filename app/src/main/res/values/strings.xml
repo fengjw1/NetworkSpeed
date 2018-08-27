@@ -11,5 +11,5 @@
     <string name="hd_video">HD Video</string>
     <string name="fhd_video">FULL HD Video</string>
     <string name="video_content">Support Video : </string>
-    <string name="restart">Restart</string>
+    <string name="restart">restart</string>
 </resources>

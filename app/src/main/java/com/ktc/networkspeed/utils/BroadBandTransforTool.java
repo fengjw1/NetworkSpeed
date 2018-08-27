@@ -37,4 +37,16 @@ public class BroadBandTransforTool {
         }
     }
 
+    public static int returnTag(Context context, float Mbps){
+        if ( 0 < Mbps && Mbps < DEFAULT_STANDARD_DEFINITION){
+            return 1;
+        }else if (Mbps > DEFAULT_STANDARD_DEFINITION && Mbps < DEFAULT_HIGH_DEFINITION){
+            return 2;
+        }else if (Mbps > DEFAULT_HIGH_DEFINITION){
+            return 3;
+        }else {
+            return 0;
+        }
+    }
+
 }

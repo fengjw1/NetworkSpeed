@@ -117,7 +117,7 @@ public class DownloadTestPopupWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
 
-                View[] views1 = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv};
+                View[] views1 = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv, restartBtn};
                 AnimUtils.setHideAnimation(views1, 3000);
 
                 View[] views2 = {mDashboardView, addressTv};
@@ -292,8 +292,12 @@ public class DownloadTestPopupWindow extends PopupWindow {
                                         BandStandardTv.setText(bandwidth);
                                         Drawable drawable = BroadBandTransforTool.returnIntState(mContext, (float) downloadModel.getFinalDownloadRate());
                                         speedStateIv.setBackground(drawable);
-                                        View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv};
+                                        View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, restartBtn};
                                         AnimUtils.setStartAnimation(views, 3000);
+                                        restartBtn.setFocusable(true);
+                                        restartBtn.requestFocus();
+                                        int tag = BroadBandTransforTool.returnTag(mContext, (float) downloadModel.getFinalDownloadRate());
+                                        AnimUtils.setStartTranslate(speedStateIv, 5000, tag);
                                     }
                                 });
                                 THREAD_RUN_FLAG = false;
