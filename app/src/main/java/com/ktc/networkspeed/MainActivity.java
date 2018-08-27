@@ -33,18 +33,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
 
-        mDownloadTestPopupWindow = new DownloadTestPopupWindow(MainActivity.this);
-        mDownloadTestPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                backgroundAlpha(1f);
-            }
-        });
-
         mButton = findViewById(R.id.btn);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDownloadTestPopupWindow = new DownloadTestPopupWindow(MainActivity.this);
+                mDownloadTestPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        backgroundAlpha(1f);
+                    }
+                });
+                mDownloadTestPopupWindow.setAnimationStyle(R.style.PopupWindow);
                 mDownloadTestPopupWindow.showAtLocation(mContext.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
                 backgroundAlpha(0.5f);
             }

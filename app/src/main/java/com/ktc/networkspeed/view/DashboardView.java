@@ -398,7 +398,7 @@ public class DashboardView extends BaseDashboardView {
         if (!TextUtils.isEmpty((String.valueOf(value)))){
             canvas.drawText(String.valueOf(decimalFormat.format(value)), mRadius, marginTop, mPaintValue);
 
-            canvas.drawText("MB/S", mRadius, marginTop + getPaintHeight(mUnitPaint, "MB/S")+ mTextSpacing, mUnitPaint);
+            canvas.drawText("Mbps/S", mRadius, marginTop + getPaintHeight(mUnitPaint, "Mbps/S")+ mTextSpacing, mUnitPaint);
         }
         //绘制数值文字信息
         if(!TextUtils.isEmpty(valueLevel)){
