@@ -20,8 +20,8 @@ import java.lang.annotation.Target;
 import java.text.DecimalFormat;
 
 /**
- * @author iron
- *         created at 2018/7/10
+ * @author fengjw
+ *
  */
 public class DashboardView extends BaseDashboardView {
 

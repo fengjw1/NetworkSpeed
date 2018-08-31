@@ -54,6 +54,8 @@ public class DownloadTestPopupWindow extends PopupWindow {
     private HashSet<String> tempBlackList;
     private TextView addressTv;
 
+    private int count = 1;
+
     //Thread
     private Thread mThread;
     private static boolean THREAD_RUN_FLAG = true;
@@ -140,7 +142,7 @@ public class DownloadTestPopupWindow extends PopupWindow {
         tempBlackList = new HashSet<>();
         mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
         mSpeedTestHostsHandler.start();
-        Threadstart();
+        threadStart();
     }
 
     private void initRestartConfig(){
@@ -151,10 +153,10 @@ public class DownloadTestPopupWindow extends PopupWindow {
         downloadTestStarted = false;
         downloadTestFinished = false;
         mSpeedTestHostsHandler = null;
-        Threadstart();
+        threadStart();
     }
 
-    private void Threadstart(){
+    private void threadStart(){
 
 //        try {
 //            if (mThread != null && mThread.isAlive()){

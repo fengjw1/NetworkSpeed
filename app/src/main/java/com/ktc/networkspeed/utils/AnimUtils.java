@@ -94,7 +94,7 @@ public class AnimUtils {
         view.setVisibility(View.VISIBLE);
         ObjectAnimator animator, animator1;
         if (tag < 3) {
-            animator = ObjectAnimator.ofFloat(view, "TranslationX", -200, 0);
+            animator = ObjectAnimator.ofFloat(view, "TranslationX", -400, 0);
             animator1 = ObjectAnimator.ofFloat(view, "TranslationY", 0, 0);
         }else {
             animator = ObjectAnimator.ofFloat(view, "TranslationX", 0, 0);

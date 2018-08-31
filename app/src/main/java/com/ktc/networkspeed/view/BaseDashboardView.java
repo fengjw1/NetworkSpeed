@@ -22,8 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author iron
- *         created at 2018/7/10
+ * @author fengjw
+ *
  */
 public abstract class BaseDashboardView extends View {
 
