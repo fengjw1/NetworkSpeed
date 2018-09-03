@@ -12,4 +12,5 @@
     <string name="fhd_video">FULL HD Video</string>
     <string name="video_content">Support Video : </string>
     <string name="restart">restart</string>
+    <string name="title_activity_network_diagnose">NetworkDiagnoseActivity</string>
 </resources>

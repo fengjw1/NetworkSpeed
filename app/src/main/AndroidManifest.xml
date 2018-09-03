@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ktc.networkdiagnose.NetworkDiagnoseActivity"
+            android:label="@string/title_activity_network_diagnose"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name="com.ktc.networkdiagnose.tmp.TempActivity">
+        </activity>
     </application>
 
 </manifest>
