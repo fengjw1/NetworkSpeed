@@ -13,4 +13,16 @@
     <string name="video_content">Support Video : </string>
     <string name="restart">restart</string>
     <string name="title_activity_network_diagnose">NetworkDiagnoseActivity</string>
+
+    <string name="diagnose_network_title">Network diagnosis</string>
+
+    <string name="diagnose_network">Diagnosing network connection status...</string>
+    <string name="diagnose_network_error">Network not connected</string>
+    <string name="diagnose_server">Diagnosing server parsing status...</string>
+    <string name="diagonse_server_error">Server not connected</string>
+    <string name="diagnose_finish">Network diagnosis is completed, good network condition</string>
+
+    <string name="diagnose_network_connect">Network connection status</string>
+    <string name="diagnose_network_dns">DNS resolution status</string>
+    <string name="diagnose_network_server">Server connection status</string>
 </resources>

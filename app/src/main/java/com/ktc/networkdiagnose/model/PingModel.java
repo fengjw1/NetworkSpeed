@@ -19,7 +19,7 @@ public class PingModel extends Thread {
     public PingModel(String serverIpAddress, int pingTryCount){
         this.server = serverIpAddress;
         this.count = pingTryCount;
-        Log.d("fengjw2", "server : " + server + " count : " + count);
+        Log.d("fengjw", "server : " + server + " count : " + count);
     }
 
     public double getInstantRtt() {
@@ -31,18 +31,19 @@ public class PingModel extends Thread {
     }
 
     public boolean isFinished() {
+        Log.d("fengjw", "isFinished : " + finished);
         return finished;
     }
 
     @Override
     public void run() {
         try {
-            ProcessBuilder ps = new ProcessBuilder("ping", "-c" + count, this.server);
+            ProcessBuilder ps = new ProcessBuilder("ping", "-c " + count, this.server);
             ps.redirectErrorStream(true);
             Process pr = ps.start();//cmd order
 
             BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-            Log.d("fengjw2", "in : " + in.toString());
+            Log.d("fengjw", "in : " + in.toString());
             String line = "";
             String output = "";
 

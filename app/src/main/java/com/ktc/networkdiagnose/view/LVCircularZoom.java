@@ -19,7 +19,7 @@ public class LVCircularZoom extends LVBase {
     private float mWidth = 0f;
     private float mHigh = 0f;
     private float mMaxRadius = 8;
-    private int circularCount = 8;
+    private int circularCount = 5;
     private float mAnimatedValue = 1.0f;
     private int mJumpValue = 0;
 
@@ -58,13 +58,11 @@ public class LVCircularZoom extends LVBase {
                         mHigh / 2,
                         mMaxRadius * mAnimatedValue, mPaint);
 
-
             } else {
                 canvas.drawCircle(i * circularX + circularX / 2f,
                         mHigh / 2,
                         mMaxRadius, mPaint);
             }
-
         }
 
 
@@ -98,7 +96,7 @@ public class LVCircularZoom extends LVBase {
         mAnimatedValue = (float) valueAnimator.getAnimatedValue();
 
         if (mAnimatedValue < 0.2) {
-            mAnimatedValue = 0.2f;
+            mAnimatedValue += 0.2f;
         }
 
 
