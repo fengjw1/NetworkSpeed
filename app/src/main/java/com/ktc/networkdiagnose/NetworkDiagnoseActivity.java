@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.ktc.networkdiagnose.model.PingModel;
 import com.ktc.networkdiagnose.view.LVCircularZoom;
 import com.ktc.networkspeed.R;
+import com.ktc.networkspeed.utils.AnimUtils;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
 import com.ktc.networkspeed.utils.NetworkState;
 
@@ -38,6 +40,9 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
     private ImageView mIv2Network;
     private TextView mTv3Network;
     private ImageView mIv3Network;
+
+    //anim
+    private final static int ANIMATION_DURATION = 1500;
 
     //network status
     private NetworkState mState;
@@ -67,6 +72,8 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
         mStatusTvNetwork.setText(R.string.diagnose_network);
         mLl1Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
         mTvIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_helios_normal));
+        View[] views = {mLl1Network, mTvIvNetwork};
+        AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, this);
         mLvzoom1.setViewColor(Color.rgb(255, 0, 122));
         mLvzoom2.setViewColor(Color.rgb(255, 0, 122));
         mLvzoom1.startAnim();
@@ -103,12 +110,20 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
                                 mLl2Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
                                 mRouterIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_network_normal));
 
+                                //anim
+                                View[] views = {mIv1Network, mIv2Network, mLl2Network, mRouterIvNetwork};
+                                AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
+
                                 mLvzoom2.startAnim();
                                 mStatusTvNetwork.setText(R.string.diagnose_server);
                                 threadStart();
 
                             }else {
                                 mLvzoom1.stopAnim();
+                                //anim
+                                View[] views = {mIv1Network};
+                                AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
+
                                 mTv1Network.setTextColor(Color.rgb(248, 248,255));
                                 mIv1Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
                                 mIv1Network.setVisibility(View.VISIBLE);
@@ -171,11 +186,13 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mTv3Network.setText(R.string.diagonse_server_error);
                                     mTv3Network.setTextColor(Color.rgb(248, 248, 255));
                                     mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
                                     mIv3Network.setVisibility(View.VISIBLE);
                                     mStatusTvNetwork.setText(R.string.diagnose_network_error);
+                                    //anim
+                                    View[] views = {mIv3Network};
+                                    AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
                                 }
                             });
                             mSpeedTestHostsHandler = null;
@@ -234,11 +251,14 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
                                         mLvzoom2.stopAnim();
                                         mLl3Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
                                         mServerIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_internet_normal));
-                                        mTv3Network.setText(R.string.diagnose_finish);
                                         mTv3Network.setTextColor(Color.rgb(248, 248,255));
                                         mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_checkbox));
                                         mIv3Network.setVisibility(View.VISIBLE);
-                                        mStatusTvNetwork.setText(R.string.diagnose_network_error);
+                                        mStatusTvNetwork.setText(R.string.diagnose_finish);
+
+                                        //anim
+                                        View[] views = {mIv3Network, mLl3Network, mServerIvNetwork};
+                                        AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
                                     }
                                 });
                                 THREAD_RUN_FLAG = false;

@@ -19,7 +19,7 @@ public class PingModel extends Thread {
     public PingModel(String serverIpAddress, int pingTryCount){
         this.server = serverIpAddress;
         this.count = pingTryCount;
-        Log.d("fengjw", "server : " + server + " count : " + count);
+//        Log.d("fengjw", "server : " + server + " count : " + count);
     }
 
     public double getInstantRtt() {
@@ -31,7 +31,7 @@ public class PingModel extends Thread {
     }
 
     public boolean isFinished() {
-        Log.d("fengjw", "isFinished : " + finished);
+//        Log.d("fengjw", "isFinished : " + finished);
         return finished;
     }
 
@@ -43,11 +43,11 @@ public class PingModel extends Thread {
             Process pr = ps.start();//cmd order
 
             BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-            Log.d("fengjw", "in : " + in.toString());
             String line = "";
             String output = "";
 
             while ((line = in.readLine()) != null){
+//                Log.d("fengjw1", "line : " + line);
                 if (line.contains("icmp_seq")){
                     instantRtt = Double.parseDouble(line.split(" ")
                             [line.split(" ").length - 2].replace("time=", ""));

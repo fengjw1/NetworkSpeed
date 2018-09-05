@@ -10,10 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-/**
- * Created by lumingmin on 2016/12/2.
- */
-
 public abstract class LVBase extends View {
 
 
@@ -64,10 +60,7 @@ public abstract class LVBase extends View {
         valueAnimator.setDuration(time);
         valueAnimator.setInterpolator(new LinearInterpolator());
 
-
         valueAnimator.setRepeatCount(SetAnimRepeatCount());
-
-
 
         if (ValueAnimator.RESTART == SetAnimRepeatMode()) {
             valueAnimator.setRepeatMode(ValueAnimator.RESTART);

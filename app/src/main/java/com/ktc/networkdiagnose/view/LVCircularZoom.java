@@ -8,9 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 
-/**
- * Created by lumingmin on 16/6/20.
- */
 
 public class LVCircularZoom extends LVBase {
 

@@ -37,23 +37,24 @@
         android:textColor="#D3D3D3"
         android:text="@string/diagnose_network"/>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="horizontal"
-        android:layout_gravity="left">
+        android:layout_width="680dp"
+        android:layout_height="160dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/network_ll_1"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
+            android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/network_diagnose_bg_normal">
         <ImageView
             android:id="@+id/network_tv_iv"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:background="@drawable/network_diagnose_icon_helios_disabled"/>
         </LinearLayout>
 
@@ -66,14 +67,15 @@
             android:id="@+id/network_ll_2"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
+            android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/network_diagnose_bg_normal">
             <ImageView
                 android:id="@+id/network_router_iv"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@drawable/network_diagnose_icon_network_disabled"/>
         </LinearLayout>
 
@@ -86,14 +88,15 @@
             android:id="@+id/network_ll_3"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
+            android:orientation="vertical"
             android:gravity="center"
             android:background="@drawable/network_diagnose_bg_normal">
             <ImageView
                 android:id="@+id/network_server_iv"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@drawable/network_diagnose_icon_internet_disabled"/>
         </LinearLayout>
     </LinearLayout>
@@ -120,6 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:src="@drawable/network_icon_checkbox"
             android:visibility="gone"/>
 
@@ -148,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:src="@drawable/network_icon_checkbox"
             android:visibility="gone"/>
 
@@ -176,6 +181,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:src="@drawable/network_icon_checkbox"
             android:visibility="gone"/>
     </RelativeLayout>

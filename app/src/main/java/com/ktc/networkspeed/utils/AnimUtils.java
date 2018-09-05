@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+
+import com.ktc.networkspeed.R;
 
 public class AnimUtils {
 
@@ -105,6 +109,14 @@ public class AnimUtils {
         sAnimatorSet.playTogether(animator, animator1, animator2);
         sAnimatorSet.setDuration(duration);
         sAnimatorSet.start();
+    }
+
+    public static void setScaleAnimation(final View[] views, int duration, Context context){
+        ScaleAnimation scaleAnimation = (ScaleAnimation) AnimationUtils.loadAnimation(context, R.anim.scale);
+        scaleAnimation.setDuration(duration);
+        for (int i = 0; i < views.length; i ++){
+            views[i].startAnimation(scaleAnimation);
+        }
     }
 
 }
