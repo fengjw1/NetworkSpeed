@@ -25,4 +25,5 @@
     <string name="diagnose_network_connect">Network connection status</string>
     <string name="diagnose_network_dns">DNS resolution status</string>
     <string name="diagnose_network_server">Server connection status</string>
+    <string name="diagnose_success">finish</string>
 </resources>

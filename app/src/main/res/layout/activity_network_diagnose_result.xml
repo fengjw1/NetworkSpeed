@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/network_diagnose_bg"
+    >
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:text="@string/diagnose_network_title"
+            android:textSize="30sp"
+            android:textColor="#D3D3D3"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp">
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/network_diagnose_bg_normal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/network_diagnose_icon_helios_disabled"/>
+            </LinearLayout>
+
+            <com.ktc.networkdiagnose.view.LVCircularZoom
+                android:id="@+id/lvzoom1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/network_diagnose_bg_normal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/network_diagnose_icon_network_disabled"/>
+            </LinearLayout>
+
+            <com.ktc.networkdiagnose.view.LVCircularZoom
+                android:id="@+id/lvzoom2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/network_diagnose_bg_normal">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/network_diagnose_icon_internet_disabled"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="500dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/common_bg_list_normal"
+            android:layout_gravity="left">
+
+            <TextView
+                android:id="@+id/network_tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:textColor="#F8F8FF"
+                android:textSize="22sp"
+                android:text="@string/diagnose_network_connect"/>
+
+            <ImageView
+                android:id="@+id/network_iv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:src="@drawable/network_icon_checkbox"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="500dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/common_bg_list_normal"
+            android:layout_gravity="left">
+
+            <TextView
+                android:id="@+id/network_tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_centerVertical="true"
+                android:textColor="#F8F8FF"
+                android:textSize="22sp"
+                android:text="@string/diagnose_network_dns"/>
+
+            <ImageView
+                android:id="@+id/network_iv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:src="@drawable/network_icon_checkbox"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="500dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="left"
+            android:background="@drawable/common_bg_list_normal">
+
+            <TextView
+                android:id="@+id/network_tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="5dp"
+                android:textColor="#F8F8FF"
+                android:textSize="22sp"
+                android:text="@string/diagnose_network_server"/>
+
+            <ImageView
+                android:id="@+id/network_iv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:src="@drawable/network_icon_checkbox"
+                android:visibility="visible"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/diagnose_finish_btn"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:background="@drawable/diagnose_button"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:text="@string/diagnose_success"
+            android:textColor="#F8F8FF"
+            android:textSize="18sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/restart_diagnose_btn"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/diagnose_button"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:text="@string/restart"
+            android:textColor="#F8F8FF"
+            android:textSize="18sp"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+</LinearLayout>

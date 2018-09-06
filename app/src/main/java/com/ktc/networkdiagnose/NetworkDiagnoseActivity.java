@@ -1,12 +1,12 @@
 package com.ktc.networkdiagnose;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +18,9 @@ import com.ktc.networkspeed.utils.AnimUtils;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
 import com.ktc.networkspeed.utils.NetworkState;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,12 +37,6 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
     private LVCircularZoom mLvzoom2;
     private ImageView mServerIvNetwork;
     private LinearLayout mLl3Network;
-    private TextView mTv1Network;
-    private ImageView mIv1Network;
-    private TextView mTv2Network;
-    private ImageView mIv2Network;
-    private TextView mTv3Network;
-    private ImageView mIv3Network;
 
     //anim
     private final static int ANIMATION_DURATION = 1500;
@@ -80,12 +77,12 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
 
         mState = new NetworkState(this);
 
-        if (mState.isNetworkConn()){
-            mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
-            mSpeedTestHostsHandler.start();
-        }else {
-            mSpeedTestHostsHandler = null;
-        }
+//        if (mState.isNetworkConn()){
+//            mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
+//            mSpeedTestHostsHandler.start();
+//        }else {
+//            mSpeedTestHostsHandler = null;
+//        }
 
         new Thread(new Runnable() {
             @Override
@@ -101,33 +98,23 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
                         public void run() {
                             if (mState.isNetworkConn()){
                                 mLvzoom1.stopAnim();
-                                mTv1Network.setTextColor(Color.rgb(248, 248,255));
-                                mIv1Network.setVisibility(View.VISIBLE);
-                                mTv2Network.setTextColor(Color.rgb(248, 248,255));
-                                mIv2Network.setVisibility(View.VISIBLE);
 
                                 //second stage
                                 mLl2Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
                                 mRouterIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_network_normal));
 
                                 //anim
-                                View[] views = {mIv1Network, mIv2Network, mLl2Network, mRouterIvNetwork};
+                                View[] views = {mLl2Network, mRouterIvNetwork};
                                 AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
 
                                 mLvzoom2.startAnim();
                                 mStatusTvNetwork.setText(R.string.diagnose_server);
-                                threadStart();
-
+                                //threadStart();
+                                pingTest();
                             }else {
                                 mLvzoom1.stopAnim();
-                                //anim
-                                View[] views = {mIv1Network};
-                                AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
-
-                                mTv1Network.setTextColor(Color.rgb(248, 248,255));
-                                mIv1Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
-                                mIv1Network.setVisibility(View.VISIBLE);
                                 mStatusTvNetwork.setText(R.string.diagnose_network_error);
+                                startActivity(1);
                             }
                         }
                     });
@@ -151,140 +138,198 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
         mServerIvNetwork = (ImageView) findViewById(R.id.network_server_iv);
         mLl3Network = (LinearLayout) findViewById(R.id.network_ll_3);
 
-        mTv1Network = (TextView) findViewById(R.id.network_tv_1);
-        mIv1Network = (ImageView) findViewById(R.id.network_iv_1);
-        mTv2Network = (TextView) findViewById(R.id.network_tv_2);
-        mIv2Network = (ImageView) findViewById(R.id.network_iv_2);
-        mTv3Network = (TextView) findViewById(R.id.network_tv_3);
-        mIv3Network = (ImageView) findViewById(R.id.network_iv_3);
     }
 
-    private void threadStart(){
-        Log.d("fengjw", "threadStart");
-        THREAD_RUN_FLAG = true;
+    private void pingTest(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.d("fengjw", "run");
-                while (THREAD_RUN_FLAG){
-                    Log.d("fengjw", "THREAD_RUN_FLAG : " + THREAD_RUN_FLAG);
-                    if (mSpeedTestHostsHandler == null) {
-                        Log.d("fengjw", "mSpeedTestHostsHandler == null");
-                        mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
-                        mSpeedTestHostsHandler.start();
-                    }
-                    int timeCount = 600;
-                    while (!mSpeedTestHostsHandler.isFinished()) {
-                        Log.d("fengjw", "mSpeedTestHostsHandler not Finished()");
-                        timeCount--;
-                        try {
-                            Thread.sleep(100);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        if (timeCount <= 0) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mTv3Network.setTextColor(Color.rgb(248, 248, 255));
-                                    mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
-                                    mIv3Network.setVisibility(View.VISIBLE);
-                                    mStatusTvNetwork.setText(R.string.diagnose_network_error);
-                                    //anim
-                                    View[] views = {mIv3Network};
-                                    AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
-                                }
-                            });
-                            mSpeedTestHostsHandler = null;
-                            return;
-                        }
-                    }
-                        //find closest server
-                        HashMap<Integer, String> mapKey = mSpeedTestHostsHandler.getMapKey();
-                        HashMap<Integer, List<String>> mapValue = mSpeedTestHostsHandler.getMapValue();
 
-                        double selfLat = mSpeedTestHostsHandler.getSelfLat();
-                        double selfLon = mSpeedTestHostsHandler.getSelfLon();
-                        double tmp = 19349458;
-                        double dist = 0;
-                        int findServerIndex = 0;
-
-                        for (int index : mapKey.keySet()) {
-                            if (tempBlackList.contains(mapValue.get(index).get(5))) {
-                                continue;
-                            }
-                            Location source = new Location("Source");
-                            source.setLatitude(selfLat);
-                            source.setLongitude(selfLon);
-
-                            List<String> ls = mapValue.get(index);
-                            Location dest = new Location("Dest");
-                            dest.setLatitude(Double.parseDouble(ls.get(0)));
-                            dest.setLongitude(Double.parseDouble(ls.get(1)));
-                            double distance = source.distanceTo(dest);
-                            if (tmp > distance) {
-                                tmp = distance;
-                                dist = distance;
-                                findServerIndex = index;
-                            }
-                        }
-
-                        String uploadAddr = mapKey.get(findServerIndex);
-                        final List<String> info = mapValue.get(findServerIndex);
-                        final double distance = dist;
-                        Log.d("fengjw", "uploadAddr : " + uploadAddr);
-
-                        final List<Double> pingRateList = new ArrayList<>();
-                        final PingModel pingModel = new PingModel(info.get(6).replace(":8080", ""), 6);
-
-                        while (true){
-                            Log.d("fengjw", "true");
-                            if (!pingTestStarted){
-                                pingModel.start();
-                                pingTestStarted = true;
-                            }
-
-                            if (pingTestFinished){
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mLvzoom2.stopAnim();
-                                        mLl3Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
-                                        mServerIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_internet_normal));
-                                        mTv3Network.setTextColor(Color.rgb(248, 248,255));
-                                        mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_checkbox));
-                                        mIv3Network.setVisibility(View.VISIBLE);
-                                        mStatusTvNetwork.setText(R.string.diagnose_finish);
-
-                                        //anim
-                                        View[] views = {mIv3Network, mLl3Network, mServerIvNetwork};
-                                        AnimUtils.setScaleAnimation(views, ANIMATION_DURATION, NetworkDiagnoseActivity.this);
-                                    }
-                                });
-                                THREAD_RUN_FLAG = false;
-                                break;
-                            }
-
-                            if (pingModel.isFinished()){
-                                pingTestFinished = true;
-                            }
-//                            if (pingTestStarted && !pingTestFinished){
-//                                try {
-//                                    Thread.sleep(300);
-//                                }catch (Exception e){
-//                                    e.printStackTrace();
-//                                }
-//                            } else {
-//                                try {
-//                                    Thread.sleep(100);
-//                                } catch (InterruptedException e) {
-//                                }
-//                            }
-                        }
-
-                    }
+                try {
+                    Thread.sleep(3000);
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+
+                String delay = new String();
+                Process p =null;
+                try{
+                    p = Runtime.getRuntime().exec("/system/bin/ping -c 6 "+"www.speedtest.net");
+//                    p = Runtime.getRuntime().exec("/system/bin/ping -c 4 "+"www.google.co.jp");
+                    BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                    String str = new String();
+                    Log.d("fengjw", "p.waitFor() : " + p.waitFor());
+                    if (p.waitFor() == 0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mLvzoom2.stopAnim();
+                                finish();
+                                mLl3Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
+                                mServerIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_internet_normal));
+                                mStatusTvNetwork.setText(R.string.diagnose_finish);
+                                startActivity(3);
+                            }
+                        });
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mStatusTvNetwork.setText(R.string.diagnose_network_error);
+                                mLvzoom2.stopAnim();
+                                finish();
+                                startActivity(2);
+                            }
+                        });
+                    }
+//                    while((str = buf.readLine())!=null){
+//                        Log.d("fengjw", "str : " + str);
+//                        if (str.contains("icmp_seq")){
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mLvzoom2.stopAnim();
+//                                    mLl3Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
+//                                    mServerIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_internet_normal));
+//                                    mStatusTvNetwork.setText(R.string.diagnose_finish);
+//                                    startActivity(3);
+//                                }
+//                            });
+//                            break;
+//                        }
+//                        if (str.contains("received")){
+////                            String[] strings = str.split(",");
+////                            for (int i = 0; i < strings.length; i ++){
+////                                Log.d("fengjw", "i = " + i + " : " + strings[i]);
+////                            }
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mStatusTvNetwork.setText(R.string.diagnose_network_error);
+//                                    startActivity(2);
+//                                }
+//                            });
+//                        }
+//                    }
+                }catch(IOException e) {
+                    e.printStackTrace();
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
         }).start();
+    }
+
+//    private void threadStart(){
+//        Log.d("fengjw", "threadStart");
+//        THREAD_RUN_FLAG = true;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.d("fengjw", "run");
+//                while (THREAD_RUN_FLAG){
+//                    Log.d("fengjw", "THREAD_RUN_FLAG : " + THREAD_RUN_FLAG);
+//                    if (mSpeedTestHostsHandler == null) {
+//                        Log.d("fengjw", "mSpeedTestHostsHandler == null");
+//                        mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
+//                        mSpeedTestHostsHandler.start();
+//                    }
+//                    int timeCount = 600;
+//                    while (!mSpeedTestHostsHandler.isFinished()) {
+//                        Log.d("fengjw", "mSpeedTestHostsHandler not Finished()");
+//                        timeCount--;
+//                        try {
+//                            Thread.sleep(100);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (timeCount <= 0) {
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    mStatusTvNetwork.setText(R.string.diagnose_network_error);
+//                                    startActivity(2);
+//                                }
+//                            });
+//                            mSpeedTestHostsHandler = null;
+//                            return;
+//                        }
+//                    }
+//                        //find closest server
+//                        HashMap<Integer, String> mapKey = mSpeedTestHostsHandler.getMapKey();
+//                        HashMap<Integer, List<String>> mapValue = mSpeedTestHostsHandler.getMapValue();
+//
+//                        double selfLat = mSpeedTestHostsHandler.getSelfLat();
+//                        double selfLon = mSpeedTestHostsHandler.getSelfLon();
+//                        double tmp = 19349458;
+//                        double dist = 0;
+//                        int findServerIndex = 0;
+//
+//                        for (int index : mapKey.keySet()) {
+//                            if (tempBlackList.contains(mapValue.get(index).get(5))) {
+//                                continue;
+//                            }
+//                            Location source = new Location("Source");
+//                            source.setLatitude(selfLat);
+//                            source.setLongitude(selfLon);
+//
+//                            List<String> ls = mapValue.get(index);
+//                            Location dest = new Location("Dest");
+//                            dest.setLatitude(Double.parseDouble(ls.get(0)));
+//                            dest.setLongitude(Double.parseDouble(ls.get(1)));
+//                            double distance = source.distanceTo(dest);
+//                            if (tmp > distance) {
+//                                tmp = distance;
+//                                dist = distance;
+//                                findServerIndex = index;
+//                            }
+//                        }
+//
+//                        String uploadAddr = mapKey.get(findServerIndex);
+//                        final List<String> info = mapValue.get(findServerIndex);
+//                        final double distance = dist;
+//                        Log.d("fengjw", "uploadAddr : " + uploadAddr);
+//
+//                        final List<Double> pingRateList = new ArrayList<>();
+//                        final PingModel pingModel = new PingModel(info.get(6).replace(":8080", ""), 6);
+//
+//                        while (true){
+//                            Log.d("fengjw", "true");
+//                            if (!pingTestStarted){
+//                                pingModel.start();
+//                                pingTestStarted = true;
+//                            }
+//
+//                            if (pingTestFinished){
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        mLvzoom2.stopAnim();
+//                                        mLl3Network.setBackground(getResources().getDrawable(R.drawable.network_diagnose__bg_highlighted));
+//                                        mServerIvNetwork.setBackground(getResources().getDrawable(R.drawable.network_diagnose_icon_internet_normal));
+//                                        mStatusTvNetwork.setText(R.string.diagnose_finish);
+//                                        startActivity(3);
+//
+//                                    }
+//                                });
+//                                THREAD_RUN_FLAG = false;
+//                                break;
+//                            }
+//
+//                            if (pingModel.isFinished()){
+//                                pingTestFinished = true;
+//                            }
+//                        }
+//
+//                    }
+//                }
+//        }).start();
+//    }
+
+    private void startActivity(int tag){
+        Intent intent = new Intent(NetworkDiagnoseActivity.this, NetworkDiagnoseResultActivity.class);
+        intent.putExtra("tag", tag);
+        startActivity(intent);
     }
 
 }

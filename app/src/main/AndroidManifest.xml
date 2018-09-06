@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -22,9 +25,13 @@
         <activity
             android:name="com.ktc.networkdiagnose.NetworkDiagnoseActivity"
             android:label="@string/title_activity_network_diagnose"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"
+            >
         </activity>
-        <activity android:name="com.ktc.networkdiagnose.tmp.TempActivity">
+
+        <activity android:name="com.ktc.networkdiagnose.NetworkDiagnoseResultActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
