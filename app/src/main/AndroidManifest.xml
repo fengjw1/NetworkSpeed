@@ -4,13 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -25,13 +25,14 @@
         <activity
             android:name="com.ktc.networkdiagnose.NetworkDiagnoseActivity"
             android:label="@string/title_activity_network_diagnose"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleInstance"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
-        <activity android:name="com.ktc.networkdiagnose.NetworkDiagnoseResultActivity"
-                  android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name="com.ktc.networkdiagnose.NetworkDiagnoseResultActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".NetworkSpeedActivity">
         </activity>
     </application>
 

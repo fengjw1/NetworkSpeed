@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupwindow_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/network_home_bg"
+    >
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:alpha="0.8"
+        android:background="@drawable/speed_tag"/>
+
+
+    <ImageView
+        android:id="@+id/speed_image_iv"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bicycle"
+        android:visibility="gone"/>
+
+    <com.ktc.networkspeed.view.DashboardView
+        android:id="@+id/dv"
+        android:padding="60dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="16dp"
+        android:layout_width="600dp"
+        android:layout_height="420dp"/>
+
+    <TextView
+        android:id="@+id/address_tv"
+        android:layout_below="@+id/dv"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/select_address"
+        android:textSize="22sp"
+        android:textColor="#E6E6FA"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/popupwindow_ll"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/download_speeed"
+                android:textSize="30sp"
+                android:textColor="#D3D3D3"
+                android:alpha="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/popupwindow_band_width_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="55sp"
+                android:textColor="#E6E6FA"/>
+            <TextView
+                android:text="@string/band_width_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textColor="#D3D3D3"
+                android:alpha="0.33"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="@string/video_content"
+                android:textColor="#D3D3D3"
+                android:textSize="35sp"
+                android:alpha="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/video_standard"
+                android:textSize="55sp"
+                android:textColor="#DCDCDC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/restart_btn"
+        android:background="@drawable/network_speed_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:padding="10dp"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="@string/restart"
+        android:textSize="30sp"
+        android:textColor="#D3D3D3"
+        android:textAllCaps="false"
+        android:alpha="0.8"
+        android:visibility="gone"/>
+
+</RelativeLayout>

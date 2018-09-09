@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:background="@drawable/network_diagnose_bg"
+    android:background="@drawable/network_home_bg"
     >
     <LinearLayout
         android:layout_weight="1"
@@ -20,28 +20,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="@string/diagnose_network_title"
             android:textSize="30sp"
             android:textColor="#D3D3D3"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_marginLeft="100dp"
             android:orientation="horizontal"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="100dp">
 
             <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/network_diagnose_bg_normal">
+                android:background="@drawable/network_diagnose__bg_highlighted">
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/network_diagnose_icon_helios_disabled"/>
+                    android:background="@drawable/network_diagnose_icon_helios_normal"/>
             </LinearLayout>
 
             <com.ktc.networkdiagnose.view.LVCircularZoom
@@ -54,13 +55,13 @@
                 android:layout_height="100dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/network_diagnose_bg_normal">
+                android:background="@drawable/network_diagnose__bg_highlighted">
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/network_diagnose_icon_network_disabled"/>
+                    android:background="@drawable/network_diagnose_icon_network_normal"/>
             </LinearLayout>
 
             <com.ktc.networkdiagnose.view.LVCircularZoom
@@ -73,13 +74,13 @@
                 android:layout_height="100dp"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@drawable/network_diagnose_bg_normal">
+                android:background="@drawable/network_diagnose__bg_highlighted">
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/network_diagnose_icon_internet_disabled"/>
+                    android:background="@drawable/network_diagnose_icon_internet_normal"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -87,6 +88,7 @@
             android:layout_width="500dp"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
+            android:layout_marginLeft="100dp"
             android:background="@drawable/common_bg_list_normal"
             android:layout_gravity="left">
 
@@ -116,6 +118,7 @@
             android:layout_width="500dp"
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="100dp"
             android:background="@drawable/common_bg_list_normal"
             android:layout_gravity="left">
 
@@ -145,6 +148,7 @@
             android:layout_width="500dp"
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="100dp"
             android:layout_gravity="left"
             android:background="@drawable/common_bg_list_normal">
 
@@ -183,8 +187,8 @@
             android:id="@+id/diagnose_finish_btn"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
             android:background="@drawable/diagnose_button"
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -196,8 +200,8 @@
 
         <Button
             android:id="@+id/restart_diagnose_btn"
-            android:layout_width="260dp"
-            android:layout_height="50dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/diagnose_button"
             android:focusable="true"

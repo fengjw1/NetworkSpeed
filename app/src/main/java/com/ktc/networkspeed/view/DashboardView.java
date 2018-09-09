@@ -74,7 +74,7 @@ public class DashboardView extends BaseDashboardView {
     private static final int DEFAULT_PROGRESS_ARC_COLOR = Color.argb(200, 112, 34, 22);
     //进度点的默认属性
     private static final float DEFAULT_PROGRESS_POINT_RADIUS = 10;
-    private static final int DEFAULT_PROGRESS_POINT_COLOR = Color.argb(255, 255, 0, 0);
+    private static final int DEFAULT_PROGRESS_POINT_COLOR = Color.argb(250, 255, 0, 255);
     // 大刻度画笔默认值
     private final static float DEFAULT_LARGE_CALIBRATION_WIDTH = 2f;
     private final static int DEFAULT_LARGE_CALIBRATION_COLOR = Color.argb(200, 220, 220, 220);
@@ -147,7 +147,7 @@ public class DashboardView extends BaseDashboardView {
         mPaintLargeCalibration.setStrokeWidth(dp2px(DEFAULT_LARGE_CALIBRATION_WIDTH));
         mPaintLargeCalibration.setColor(DEFAULT_LARGE_CALIBRATION_COLOR);
 
-        //大刻度画笔
+        //大刻度进度画笔
         mPaintProgressLargeCalibration = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintProgressLargeCalibration.setStrokeWidth(dp2px(DEFAULT_LARGE_CALIBRATION_WIDTH));
         mPaintProgressLargeCalibration.setColor(DEFAULT_PROGRESS_POINT_COLOR);
@@ -157,7 +157,7 @@ public class DashboardView extends BaseDashboardView {
         mPaintSmallCalibration.setStrokeWidth(dp2px(DEFAULT_SMALL_CALIBRATION_WIDTH));
         mPaintSmallCalibration.setColor(DEFAULT_SMALL_CALIBRATION_COLOR);
 
-        //小刻度画笔
+        //小刻度进度画笔
         mPaintProgressSmallCalibration = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintProgressSmallCalibration.setStrokeWidth(dp2px(DEFAULT_SMALL_CALIBRATION_WIDTH));
         mPaintProgressSmallCalibration.setColor(DEFAULT_PROGRESS_POINT_COLOR);
@@ -261,8 +261,8 @@ public class DashboardView extends BaseDashboardView {
      * 画内部渐变颜色圆
      */
     private void drawInnerCricle(float dx, float dy,int radius, Canvas canvas, float arcStartAngle, float arcSweepAngle, boolean useCenter, Paint paint){
-        mInnerShader = new RadialGradient(dx,dy,radius, Color.parseColor("#808080"),
-                Color.parseColor("#000100"),Shader.TileMode.CLAMP);
+        mInnerShader = new RadialGradient(dx,dy,radius, Color.parseColor("#1B1B1D"),
+                Color.parseColor("#0D243A"),Shader.TileMode.CLAMP);
         mInnerPaint.setShader(mInnerShader);
         canvas.save();
 //        canvas.drawCircle(dx, dy, radius, mInnerPaint);

@@ -108,8 +108,8 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/restart_btn"
-        android:background="@drawable/button"
+        android:id="@+id/restart_btn_pop"
+        android:background="@drawable/network_speed_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
@@ -119,12 +119,11 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:duplicateParentState="true"
         android:text="@string/restart"
         android:textSize="30sp"
         android:textColor="#D3D3D3"
         android:textAllCaps="false"
-        android:alpha="0.5"
+        android:alpha="0.8"
         android:visibility="gone"/>
 
 </RelativeLayout>

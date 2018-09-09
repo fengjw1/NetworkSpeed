@@ -118,16 +118,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.network_home_speed_ll:
                 // TODO 18/09/06
-                mDownloadTestPopupWindow = new DownloadTestPopupWindow(MainActivity.this);
-                mDownloadTestPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        backgroundAlpha(1f);
-                    }
-                });
-                mDownloadTestPopupWindow.setAnimationStyle(R.style.PopupWindow);
-                mDownloadTestPopupWindow.showAtLocation(mContext.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
-                backgroundAlpha(0.5f);
+//                mDownloadTestPopupWindow = new DownloadTestPopupWindow(MainActivity.this);
+//                mDownloadTestPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss() {
+//                        backgroundAlpha(1f);
+//                    }
+//                });
+//                mDownloadTestPopupWindow.setAnimationStyle(R.style.PopupWindow);
+//                mDownloadTestPopupWindow.showAtLocation(mContext.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+//                backgroundAlpha(0.8f);
+                Intent intent1 = new Intent(MainActivity.this, NetworkSpeedActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.btn2:
                 // TODO 18/09/06
