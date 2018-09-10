@@ -74,7 +74,12 @@ public class AnimUtils {
             @Override
             public void onAnimationStart(Animation animation) {
                 for (int i = 0; i < views.length; i ++) {
+
                     views[i].setVisibility(View.VISIBLE);
+                    if (i == 3){
+                        views[i].setFocusable(true);
+                        views[i].requestFocus();
+                    }
                 }
             }
 

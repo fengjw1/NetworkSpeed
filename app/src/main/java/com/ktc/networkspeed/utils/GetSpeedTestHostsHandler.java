@@ -3,6 +3,7 @@ package com.ktc.networkspeed.utils;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -18,7 +19,7 @@ public class GetSpeedTestHostsHandler extends Thread {
     double selfLat = 0.0; //latitude
     double selfLon = 0.0; //longitude
     boolean finished = false;
-
+    boolean pingValue = true;
     public HashMap<Integer, String> getMapKey() {
         return mapKey;
     }
@@ -39,10 +40,20 @@ public class GetSpeedTestHostsHandler extends Thread {
         return finished;
     }
 
+    public boolean isConnected(){
+        Log.d("fengjw", "isConnected : " + pingValue);
+        return pingValue;
+    }
+
     @Override
     public void run() {
-        getConfigValue();
-        getServerValue();
+        if (pingTest()) {
+            pingValue = true;
+            getConfigValue();
+            getServerValue();
+        }else {
+            pingValue = false;
+        }
     }
 
     /**
@@ -139,6 +150,30 @@ public class GetSpeedTestHostsHandler extends Thread {
             e.printStackTrace();
         }
         finished = true;
+    }
+
+    /**
+     * ping
+     */
+    //ping
+    private boolean pingTest(){
+
+        Process p = null;
+        try{
+            p = Runtime.getRuntime().exec("/system/bin/ping -c 6 "+"www.speedtest.net");
+            Log.d("fengjw", "p.waitFor() : " + p.waitFor());
+            if (p.waitFor() == 0){
+                return true;
+            }else {
+                Log.d("fengjw", "ping else ------");
+                return false;
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

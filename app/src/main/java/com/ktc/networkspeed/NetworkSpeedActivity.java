@@ -1,8 +1,8 @@
 package com.ktc.networkspeed;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,14 +20,13 @@ import com.ktc.networkspeed.utils.BroadBandTransforTool;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
 import com.ktc.networkspeed.utils.NetworkState;
 import com.ktc.networkspeed.view.DashboardView;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class NetworkSpeedActivity extends AppCompatActivity {
+public class NetworkSpeedActivity extends Activity {
 
     private DashboardView mDashboardView;
     private RelativeLayout popupwindowRl;
@@ -67,25 +66,6 @@ public class NetworkSpeedActivity extends AppCompatActivity {
             Toast.makeText(NetworkSpeedActivity.this, R.string.not_network, Toast.LENGTH_LONG).show();
             addressTv.setText(R.string.not_network);
         }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                View v = NetworkSpeedActivity.this.getWindow().getDecorView();
-                View focusId = v.findFocus();
-                if (focusId == null){
-
-                }else {
-                    Log.d("fengjwa", "view : " + focusId.toString());
-                }
-            }
-        }).start();
-
     }
 
     private void init(){
@@ -176,6 +156,18 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                         mSpeedTestHostsHandler.start();
                     }
 
+                    //ping test
+                    if (!mSpeedTestHostsHandler.isConnected()){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                addressTv.setText(R.string.not_connection);
+                            }
+                        });
+                        THREAD_RUN_FLAG = false;
+                        break;
+                    }
+
                     int tiemCount = 600;
                     while (!mSpeedTestHostsHandler.isFinished()) {
 //                        Log.d("fengjw", "!mSpeedTestHostsHandler.isFinished()");
@@ -256,7 +248,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                             if (!downloadTestFinished) {
                                 //Log.d("fengjw", "downloadTestFinished is false.");
                                 double downloadRate = downloadModel.getInstantDownloadRate();
-                                Log.d("fengjw", "downloadRate : " + downloadRate);
+//                                Log.d("fengjw", "downloadRate : " + downloadRate);
                                 downloadRateList.add(downloadRate);
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -269,7 +261,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.d("fengjw", "downloadModel.getFinalDownloadRate() : " + downloadModel.getFinalDownloadRate());
+//                                        Log.d("fengjw", "downloadModel.getFinalDownloadRate() : " + downloadModel.getFinalDownloadRate());
                                         mDashboardView.setValue((float) downloadModel.getFinalDownloadRate(), true, false);
                                     }
                                 });
@@ -292,8 +284,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                                         speedStateIv.setBackground(drawable);
                                         View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, restartBtn};
                                         AnimUtils.setStartAnimation(views, 3000);
-//                                        restartBtn.setFocusable(true);
-//                                        restartBtn.requestFocus();
+//
                                         int tag = BroadBandTransforTool.returnTag(NetworkSpeedActivity.this, (float) downloadModel.getFinalDownloadRate());
                                         AnimUtils.setStartTranslate(speedStateIv, 5000, tag);
                                     }
@@ -339,5 +330,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
         });
         mThread.start();
     }
+
+
 
 }

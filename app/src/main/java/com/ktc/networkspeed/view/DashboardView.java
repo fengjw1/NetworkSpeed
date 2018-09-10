@@ -366,7 +366,7 @@ public class DashboardView extends BaseDashboardView {
         canvas.rotate(arcStartAngle - 270, mRadius, mRadius);
         int mod = mLargeBetweenCalibrationNumber + 1;
         int tmp = (int)((progressSweepAngle / mSmallCalibrationBetweenAngle) + 0.5f);
-        Log.d("fengjw", "tmp : " + tmp);
+//        Log.d("fengjw", "tmp : " + tmp);
         //遍历数量
         for (int i = 0; i < tmp + 1; i++) {
             //绘制刻度线

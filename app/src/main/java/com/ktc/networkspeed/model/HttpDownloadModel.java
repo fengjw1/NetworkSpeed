@@ -49,7 +49,7 @@ public class HttpDownloadModel extends Thread {
     }
 
     private double round(double value, int places){
-        Log.d("fengjw", "value : " + value);
+//        Log.d("fengjw", "value : " + value);
         if (places < 0) throw new IllegalArgumentException();
 
         BigDecimal bd; //bignums
@@ -96,7 +96,7 @@ public class HttpDownloadModel extends Thread {
                         endTime = System.currentTimeMillis();
                         downloadElapsedTime = (endTime - startTime) / 1000.0;
                         setInstantDownloadRate(downloadedByte, downloadElapsedTime);
-                        Log.d("fengjw", "downloadedByte : " + downloadedByte);
+//                        Log.d("fengjw", "downloadedByte : " + downloadedByte);
                         if (downloadElapsedTime >= timeout){
                             Log.d("fengjw", "timeout");
                             break outer;
