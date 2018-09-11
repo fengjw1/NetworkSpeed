@@ -46,10 +46,22 @@
                     android:background="@drawable/network_diagnose_icon_helios_normal"/>
             </LinearLayout>
 
-            <com.ktc.networkdiagnose.view.LVCircularZoom
-                android:id="@+id/lvzoom1"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.ktc.networkdiagnose.view.LVCircularZoom
+                    android:id="@+id/lvzoom1"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/tv_error_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_mark"
+                    android:visibility="gone"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="100dp"
@@ -65,10 +77,21 @@
                     android:background="@drawable/network_diagnose_icon_network_normal"/>
             </LinearLayout>
 
-            <com.ktc.networkdiagnose.view.LVCircularZoom
-                android:id="@+id/lvzoom2"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.ktc.networkdiagnose.view.LVCircularZoom
+                    android:id="@+id/lvzoom2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/network_error_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_mark"
+                    android:visibility="gone"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="100dp"

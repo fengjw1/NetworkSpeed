@@ -2,9 +2,11 @@ package com.ktc.networkdiagnose;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ public class NetworkDiagnoseDiyActivity extends Activity implements View.OnClick
     private LinearLayout mNetworkContent2Diagnose;
     private Button mFinishBtnDiagnose;
     private Button mDiagnoseBtnRestart;
+    private ImageView mErrorIvTv;
+    private ImageView mErrorIvNetwork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,22 @@ public class NetworkDiagnoseDiyActivity extends Activity implements View.OnClick
         initData(tag);
     }
 
-    private void initData(int tag){
-        if (tag == 1){
+    private void initData(int tag) {
+        if (tag == 1) {
             mNetworkContent1Diagnose.setVisibility(View.VISIBLE);
             mNetworkContent2Diagnose.setVisibility(View.GONE);
-        }else if(tag == 2){
+            mErrorIvTv.setVisibility(View.VISIBLE);
+            mErrorIvNetwork.setVisibility(View.GONE);
+            mLvzoom1.setViewColor(Color.argb(200, 251, 72, 91));
+        } else if (tag == 2) {
             mNetworkContent1Diagnose.setVisibility(View.GONE);
             mNetworkContent2Diagnose.setVisibility(View.VISIBLE);
+            mErrorIvTv.setVisibility(View.GONE);
+            mErrorIvNetwork.setVisibility(View.VISIBLE);
+            mLvzoom2.setViewColor(Color.argb(200, 251, 72, 91));
+        }else {
+            mErrorIvTv.setVisibility(View.GONE);
+            mErrorIvNetwork.setVisibility(View.GONE);
         }
     }
 
@@ -53,6 +66,8 @@ public class NetworkDiagnoseDiyActivity extends Activity implements View.OnClick
         mFinishBtnDiagnose.setOnClickListener(this);
         mDiagnoseBtnRestart = (Button) findViewById(R.id.restart_diagnose_btn);
         mDiagnoseBtnRestart.setOnClickListener(this);
+        mErrorIvTv = (ImageView) findViewById(R.id.tv_error_iv);
+        mErrorIvNetwork = (ImageView) findViewById(R.id.network_error_iv);
     }
 
     @Override
