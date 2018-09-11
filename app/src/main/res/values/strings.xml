@@ -16,6 +16,16 @@
 
     <string name="diagnose_network_title">Network diagnosis</string>
 
+    <string name="diagnose_network_diy">Diy maintenance</string>
+    <string name="diagnose_network_maintenance_guidance">Maintenance guidance</string>
+    <string name="diagnose_network_exception_internet">Exception: router access Internet error</string>
+    <string name="diagnose_network_exception_tv">Exception: TV access router error</string>
+    <string name="diagnose_network_check_router_networking">Check the router for successful networking</string>
+    <string name="diagnose_network_check_router_working">Check if the router is working properly</string>
+    <string name="diagnose_network_check_router_restart">Try to restart the router</string>
+
+    <string name="diagnose_network_check_tv_networking">Check that the TV is connected to the router</string>
+
     <string name="diagnose_network">Diagnosing network connection status...</string>
     <string name="diagnose_network_error">Network not connected</string>
     <string name="diagnose_server">Diagnosing server parsing status...</string>
@@ -26,4 +36,5 @@
     <string name="diagnose_network_dns">DNS resolution status</string>
     <string name="diagnose_network_server">Server connection status</string>
     <string name="diagnose_success">finish</string>
+    <string name="diagnose_advise">Recommended to check equipment according to the instructions</string>
 </resources>

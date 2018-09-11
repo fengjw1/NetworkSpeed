@@ -158,7 +158,7 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
 //                    p = Runtime.getRuntime().exec("/system/bin/ping -c 4 "+"www.google.co.jp");
                     BufferedReader buf = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String str = new String();
-                    Log.d("fengjw", "p.waitFor() : " + p.waitFor());
+//                    Log.d("fengjw", "p.waitFor() : " + p.waitFor());
                     if (p.waitFor() == 0){
                         runOnUiThread(new Runnable() {
                             @Override
@@ -177,7 +177,6 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
                             public void run() {
                                 mStatusTvNetwork.setText(R.string.diagnose_network_error);
                                 mLvzoom2.stopAnim();
-                                finish();
                                 startActivity(2);
                             }
                         });
@@ -327,6 +326,7 @@ public class NetworkDiagnoseActivity extends AppCompatActivity {
 //    }
 
     private void startActivity(int tag){
+        finish();
         Intent intent = new Intent(NetworkDiagnoseActivity.this, NetworkDiagnoseResultActivity.class);
         intent.putExtra("tag", tag);
         startActivity(intent);

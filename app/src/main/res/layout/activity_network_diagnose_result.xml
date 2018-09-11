@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="40dp"
+            android:layout_marginLeft="40dp"
             android:text="@string/diagnose_network_title"
             android:textSize="30sp"
             android:textColor="#D3D3D3"/>

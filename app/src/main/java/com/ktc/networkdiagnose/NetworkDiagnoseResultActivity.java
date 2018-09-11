@@ -41,11 +41,14 @@ public class NetworkDiagnoseResultActivity extends Activity implements View.OnCl
                 mIv1Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
                 mIv2Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
                 mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
+                mFinishBtnDiagnose.setText(R.string.diagnose_network_diy);
                 break;
             case 2:
                 mIv3Network.setImageDrawable(getResources().getDrawable(R.drawable.network_icon_error));
+                mFinishBtnDiagnose.setText(R.string.diagnose_network_diy);
                 break;
             case 3:
+                mFinishBtnDiagnose.setText(R.string.diagnose_success);
                 break;
             default:
                 break;
@@ -69,11 +72,16 @@ public class NetworkDiagnoseResultActivity extends Activity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.diagnose_finish_btn:
-                // TODO 18/09/07
-                finish();
+                if (tag < 3){
+                    finish();
+                    Intent intent = new Intent(this, NetworkDiagnoseDiyActivity.class);
+                    intent.putExtra("tag", tag);
+                    startActivity(intent);
+                }else {
+                    finish();
+                }
                 break;
             case R.id.restart_diagnose_btn:
-                // TODO 18/09/07
                 finish();
                 Intent intent = new Intent(this, NetworkDiagnoseActivity.class);
                 startActivity(intent);
