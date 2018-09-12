@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 import com.ktc.networkdiagnose.view.LVCircularZoom;
 import com.ktc.networkspeed.R;
 
-public class NetworkDiagnoseResultActivity extends Activity implements View.OnClickListener {
+public class NetworkDiagnoseResultActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int tag = 0;
     private TextView mTv1Network;

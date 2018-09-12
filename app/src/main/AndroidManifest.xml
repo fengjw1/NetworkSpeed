@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          android:sharedUserId="android.uid.system"
           package="com.ktc.networkspeed">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -24,17 +25,17 @@
         </activity>
         <activity
             android:name="com.ktc.networkdiagnose.NetworkDiagnoseActivity"
-            android:label="@string/title_activity_network_diagnose"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="com.ktc.networkdiagnose.NetworkDiagnoseResultActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTask">
         </activity>
-        <activity android:name=".NetworkSpeedActivity">
+        <activity android:name=".NetworkSpeedActivity"
+                  android:launchMode="singleTask">
         </activity>
-        <activity android:name="com.ktc.networkdiagnose.NetworkDiagnoseDiyActivity">
+        <activity android:name="com.ktc.networkdiagnose.NetworkDiagnoseDiyActivity"
+                  android:launchMode="singleTask">
         </activity>
     </application>
 

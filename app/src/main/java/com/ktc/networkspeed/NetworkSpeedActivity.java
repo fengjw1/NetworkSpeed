@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +30,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class NetworkSpeedActivity extends Activity {
+public class NetworkSpeedActivity extends AppCompatActivity {
 
     private DashboardView mDashboardView;
     private RelativeLayout popupwindowRl;
