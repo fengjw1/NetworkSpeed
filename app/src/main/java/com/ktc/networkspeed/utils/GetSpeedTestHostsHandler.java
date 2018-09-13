@@ -47,7 +47,7 @@ public class GetSpeedTestHostsHandler extends Thread {
 
     @Override
     public void run() {
-        if (pingTest()) {
+        if (true) {
             pingValue = true;
             getConfigValue();
             getServerValue();
@@ -72,7 +72,6 @@ public class GetSpeedTestHostsHandler extends Thread {
              // rating="0" ispdlavg="0" ispulavg="0"
              // loggedin="0" country="CN"/>
              */
-
             int ptr = 0;
             StringBuffer buffer = new StringBuffer();
             while ( (ptr = is.read()) != -1){
@@ -155,13 +154,12 @@ public class GetSpeedTestHostsHandler extends Thread {
     /**
      * ping
      */
-    //ping
     private boolean pingTest(){
 
         Process p = null;
         try{
             p = Runtime.getRuntime().exec("/system/bin/ping -c 6 "+"www.speedtest.net");
-            Log.d("fengjw", "p.waitFor() : " + p.waitFor());
+//            Log.d("fengjw", "p.waitFor() : " + p.waitFor());
             if (p.waitFor() == 0){
                 return true;
             }else {

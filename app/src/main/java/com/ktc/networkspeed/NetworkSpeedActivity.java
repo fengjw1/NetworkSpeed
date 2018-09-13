@@ -1,16 +1,12 @@
 package com.ktc.networkspeed;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,19 +14,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.ktc.networkspeed.model.HttpDownloadModel;
 import com.ktc.networkspeed.utils.AnimUtils;
 import com.ktc.networkspeed.utils.BroadBandTransforTool;
 import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
 import com.ktc.networkspeed.utils.NetworkState;
 import com.ktc.networkspeed.view.DashboardView;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class NetworkSpeedActivity extends AppCompatActivity {
+public class NetworkSpeedActivity extends AppCompatActivity implements View.OnClickListener {
 
     private DashboardView mDashboardView;
     private RelativeLayout popupwindowRl;
@@ -40,6 +38,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
     private TextView DownloadSpeedTv;
     private TextView BandStandardTv;
     private Button restartBtn;
+    private Button mBtnFinish;
     private ImageView speedStateIv;
 
     private NetworkState mState;
@@ -56,6 +55,8 @@ public class NetworkSpeedActivity extends AppCompatActivity {
     //Thread
     private Thread mThread;
     private static boolean THREAD_RUN_FLAG = true;
+    private ImageView mSpeedIconNetwork;
+    private SpinKitView mKitSpin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,20 +67,21 @@ public class NetworkSpeedActivity extends AppCompatActivity {
 
         if (mState.isNetworkConn()) {
             init();
-        }else {
+            mKitSpin.setVisibility(View.VISIBLE);
+        } else {
             Toast.makeText(NetworkSpeedActivity.this, R.string.not_network, Toast.LENGTH_LONG).show();
             addressTv.setText(R.string.not_network);
         }
     }
 
-    private void init(){
+    private void init() {
         tempBlackList = new HashSet<>();
         mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
         mSpeedTestHostsHandler.start();
         threadStart();
     }
 
-    private void initView(){
+    private void initView() {
         mDashboardView = findViewById(R.id.dv);
         addressTv = findViewById(R.id.address_tv);
         popupwindowRl = findViewById(R.id.popupwindow_rl);
@@ -87,7 +89,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
         popupwindowRl.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK){
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
                     return true;
                 }
                 return false;
@@ -99,14 +101,19 @@ public class NetworkSpeedActivity extends AppCompatActivity {
         DownloadSpeedTv = (TextView) findViewById(R.id.popupwindow_band_width_tv);
         BandStandardTv = (TextView) findViewById(R.id.video_standard);
         speedStateIv = (ImageView) findViewById(R.id.speed_image_iv);
+        mBtnFinish = (Button) findViewById(R.id.finish_btn);
+        mBtnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         restartBtn = (Button) findViewById(R.id.restart_btn);
-        restartBtn.setFocusable(true);
-        restartBtn.requestFocus();
         restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                View[] views1 = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv, restartBtn};
+                View[] views1 = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv, restartBtn, mBtnFinish};
                 AnimUtils.setHideAnimation(views1, 3000);
 
                 View[] views2 = {mDashboardView, addressTv};
@@ -123,20 +130,22 @@ public class NetworkSpeedActivity extends AppCompatActivity {
 
         mState = new NetworkState(NetworkSpeedActivity.this);
 
+        mSpeedIconNetwork = (ImageView) findViewById(R.id.network_speed_icon);
+        mKitSpin = (SpinKitView) findViewById(R.id.spin_kit);
     }
 
-    private void initRestartConfig(){
+    private void initRestartConfig() {
 
         mDashboardView.setValue(0);
         addressTv.setText(R.string.select_address);
-
+        mKitSpin.setVisibility(View.VISIBLE);
         downloadTestStarted = false;
         downloadTestFinished = false;
         mSpeedTestHostsHandler = null;
         threadStart();
     }
 
-    private void threadStart(){
+    private void threadStart() {
 
 //        try {
 //            if (mThread != null && mThread.isAlive()){
@@ -161,7 +170,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                     }
 
                     //ping test
-                    if (!mSpeedTestHostsHandler.isConnected()){
+                    if (!mSpeedTestHostsHandler.isConnected()) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -186,6 +195,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     addressTv.setText(R.string.not_connection);
+                                    mKitSpin.setVisibility(View.GONE);
                                 }
                             });
                             mSpeedTestHostsHandler = null;
@@ -231,6 +241,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            mKitSpin.setVisibility(View.GONE);
                             String str = String.format(getResources().getString(R.string.server_address), info.get(5).toString(), info.get(3).toString(),
                                     new DecimalFormat("#.##").format(distance / 1000).toString());
                             addressTv.setText(str);
@@ -286,7 +297,7 @@ public class NetworkSpeedActivity extends AppCompatActivity {
                                         BandStandardTv.setText(bandwidth);
                                         Drawable drawable = BroadBandTransforTool.returnIntState(NetworkSpeedActivity.this, (float) downloadModel.getFinalDownloadRate());
                                         speedStateIv.setBackground(drawable);
-                                        View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, restartBtn};
+                                        View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, restartBtn, mBtnFinish};
                                         AnimUtils.setStartAnimation(views, 3000);
 //
                                         int tag = BroadBandTransforTool.returnTag(NetworkSpeedActivity.this, (float) downloadModel.getFinalDownloadRate());
@@ -336,5 +347,17 @@ public class NetworkSpeedActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.finish_btn:
+                // TODO 18/09/13
+                break;
+            case R.id.restart_btn:
+                // TODO 18/09/13
+                break;
+            default:
+                break;
+        }
+    }
 }

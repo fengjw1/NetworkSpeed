@@ -76,7 +76,7 @@ public class AnimUtils {
                 for (int i = 0; i < views.length; i ++) {
 
                     views[i].setVisibility(View.VISIBLE);
-                    if (i == 3){
+                    if (i == 4){
                         views[i].setFocusable(true);
                         views[i].requestFocus();
                     }
