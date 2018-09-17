@@ -20,19 +20,23 @@ public class HttpDownloadModel extends Thread {
     private double finalDownloadRate =0.0;
     private double instantDownloadRate = 0.0;
     private boolean finished = false;
-    private int timeout = 15;
+    private double timeout = 8;
 
     private HttpURLConnection httpConn = null;
 
     public HttpDownloadModel(String fileURL){
+        Log.d("fengjw", "HttpDownloadModel");
         this.fileURL = fileURL;
     }
 
     public double getInstantDownloadRate() {
+        Log.d("fengjw", "getInstantDownloadRate");
         return instantDownloadRate;
     }
 
+
     public void setInstantDownloadRate(int downloadedByte, double elapsedTime){
+        Log.d("fengjw", "setInstantDownloadRate");
         if (downloadedByte >= 0){
             this.instantDownloadRate = round((Double) (((downloadedByte * 8) / (1000 * 1000)) / elapsedTime), 2);
         }else {
@@ -83,6 +87,7 @@ public class HttpDownloadModel extends Thread {
                 responseCode = httpConn.getResponseCode();
                 Log.d("fengjw", "responseCode : " + responseCode);
             }catch (Exception e){
+                Log.d("fengjw", "Exception : " + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -96,7 +101,7 @@ public class HttpDownloadModel extends Thread {
                         endTime = System.currentTimeMillis();
                         downloadElapsedTime = (endTime - startTime) / 1000.0;
                         setInstantDownloadRate(downloadedByte, downloadElapsedTime);
-//                        Log.d("fengjw", "downloadedByte : " + downloadedByte);
+                        Log.d("fengjw", "downloadedByte : " + downloadedByte);
                         if (downloadElapsedTime >= timeout){
                             Log.d("fengjw", "timeout");
                             break outer;

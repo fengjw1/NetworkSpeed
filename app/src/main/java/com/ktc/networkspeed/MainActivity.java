@@ -51,23 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHomeSpeedLlNetwork.setOnClickListener(this);
     }
 
-    private void init() {
-
-        Button button2 = (Button) findViewById(R.id.btn2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        pingTest();
-                    }
-                }).start();
-            }
-        });
-    }
-
-
     /**
      * 设置屏幕背景透明度
      */
@@ -123,9 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                backgroundAlpha(0.8f);
                 Intent intent1 = new Intent(MainActivity.this, NetworkSpeedActivity.class);
                 startActivity(intent1);
-                break;
-            case R.id.btn2:
-                // TODO 18/09/06
                 break;
             default:
                 break;

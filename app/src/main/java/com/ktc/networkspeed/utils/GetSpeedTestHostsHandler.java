@@ -47,13 +47,8 @@ public class GetSpeedTestHostsHandler extends Thread {
 
     @Override
     public void run() {
-        if (true) {
-            pingValue = true;
             getConfigValue();
             getServerValue();
-        }else {
-            pingValue = false;
-        }
     }
 
     /**

@@ -22,6 +22,7 @@ import com.ktc.networkspeed.utils.GetSpeedTestHostsHandler;
 import com.ktc.networkspeed.utils.NetworkState;
 import com.ktc.networkspeed.view.DashboardView;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,6 +114,8 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
 
+                restartBtn.setClickable(false);
+
                 View[] views1 = {popupwindowLl, DownloadSpeedTv, BandStandardTv, speedStateIv, restartBtn, mBtnFinish};
                 AnimUtils.setHideAnimation(views1, 3000);
 
@@ -141,7 +144,7 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
         mKitSpin.setVisibility(View.VISIBLE);
         downloadTestStarted = false;
         downloadTestFinished = false;
-        mSpeedTestHostsHandler = null;
+//        mSpeedTestHostsHandler = null;
         threadStart();
     }
 
@@ -159,38 +162,38 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
 //        }
 
         THREAD_RUN_FLAG = true;
+        if (mSpeedTestHostsHandler == null) {
+            Log.d("fengjw", "mSpeedTestHostsHandler == null");
+            mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
+            mSpeedTestHostsHandler.start();
+        }
         mThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (THREAD_RUN_FLAG) {
-                    if (mSpeedTestHostsHandler == null) {
-                        Log.d("fengjw", "mSpeedTestHostsHandler == null");
-                        mSpeedTestHostsHandler = new GetSpeedTestHostsHandler();
-                        mSpeedTestHostsHandler.start();
-                    }
 
                     //ping test
-                    if (!mSpeedTestHostsHandler.isConnected()) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                addressTv.setText(R.string.not_connection);
-                            }
-                        });
-                        THREAD_RUN_FLAG = false;
-                        break;
-                    }
+//                    if ((mSpeedTestHostsHandler != null) && (!mSpeedTestHostsHandler.isConnected())) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                addressTv.setText(R.string.not_connection);
+//                            }
+//                        });
+//                        THREAD_RUN_FLAG = false;
+//                        break;
+//                    }
 
-                    int tiemCount = 600;
-                    while (!mSpeedTestHostsHandler.isFinished()) {
-//                        Log.d("fengjw", "!mSpeedTestHostsHandler.isFinished()");
-                        tiemCount--;
+                    int timeCount = 300;
+                    while ((mSpeedTestHostsHandler != null) && (!mSpeedTestHostsHandler.isFinished())) {
+                        Log.d("fengjw", "!mSpeedTestHostsHandler.isFinished()");
+                        timeCount--;
                         try {
                             Thread.sleep(100);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (tiemCount <= 0) {
+                        if (timeCount <= 0) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -209,6 +212,21 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
 
                     double selfLat = mSpeedTestHostsHandler.getSelfLat();
                     double selfLon = mSpeedTestHostsHandler.getSelfLon();
+
+                    Log.d("fengjw", "selfLat : " + selfLat);
+                    Log.d("fengjw", "selfLon : " + selfLon);
+                    if (selfLat == 0 && selfLon == 0){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                addressTv.setText(R.string.not_connection);
+                                mKitSpin.setVisibility(View.GONE);
+                            }
+                        });
+                        mSpeedTestHostsHandler = null;
+                        return;
+                    }
+
                     double tmp = 19349458;
                     double dist = 0;
                     int findServerIndex = 0;
@@ -261,9 +279,9 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
                             Log.d("fengjw", "while");
 
                             if (!downloadTestFinished) {
-                                //Log.d("fengjw", "downloadTestFinished is false.");
+                                Log.d("fengjw", "downloadTestFinished is false.");
                                 double downloadRate = downloadModel.getInstantDownloadRate();
-//                                Log.d("fengjw", "downloadRate : " + downloadRate);
+                                Log.d("fengjw", "downloadRate : " + downloadRate);
                                 downloadRateList.add(downloadRate);
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -276,7 +294,7 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-//                                        Log.d("fengjw", "downloadModel.getFinalDownloadRate() : " + downloadModel.getFinalDownloadRate());
+                                        Log.d("fengjw", "downloadModel.getFinalDownloadRate() : " + downloadModel.getFinalDownloadRate());
                                         mDashboardView.setValue((float) downloadModel.getFinalDownloadRate(), true, false);
                                     }
                                 });
@@ -297,6 +315,7 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
                                         BandStandardTv.setText(bandwidth);
                                         Drawable drawable = BroadBandTransforTool.returnIntState(NetworkSpeedActivity.this, (float) downloadModel.getFinalDownloadRate());
                                         speedStateIv.setBackground(drawable);
+                                        restartBtn.setClickable(true);
                                         View[] views = {popupwindowLl, DownloadSpeedTv, BandStandardTv, restartBtn, mBtnFinish};
                                         AnimUtils.setStartAnimation(views, 3000);
 //
@@ -348,6 +367,12 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
 
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("fengjw", "onDestroy");
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.finish_btn:
@@ -360,4 +385,5 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
+
 }

@@ -2,7 +2,7 @@
     <string name="app_name">Network Speed</string>
     <string name="title_activity_download">DownloadActivity</string>
     <string name="select_address">Selecting the server best closed to you</string>
-    <string name="not_connection">No Connection...</string>
+    <string name="not_connection">Request server timeout</string>
     <string name="server_address">Server from <xliff:g id="1">%s</xliff:g> (<xliff:g id="2">%s</xliff:g>) [<xliff:g id="3">%s</xliff:g> km]</string>
     <string name="not_network">Network not currently connected.</string>
     <string name="download_speeed">Speed : </string>
@@ -37,4 +37,8 @@
     <string name="diagnose_network_server">Server connection status</string>
     <string name="diagnose_success">finish</string>
     <string name="diagnose_advise">Recommended to check equipment according to the instructions</string>
+
+    <string name="activity_home_memory_manager">Memory Management</string>
+    <string name="activity_home_file_manager">File Management</string>
+    <string name="activity_home_update_manager">Update Management</string>
 </resources>
