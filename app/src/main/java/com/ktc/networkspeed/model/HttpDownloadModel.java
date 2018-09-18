@@ -69,6 +69,7 @@ public class HttpDownloadModel extends Thread {
 
     @Override
     public void run() {
+        Log.d("fengjw", "run");
         URL url = null;
         downloadedByte = 0;
         int responseCode = 0;

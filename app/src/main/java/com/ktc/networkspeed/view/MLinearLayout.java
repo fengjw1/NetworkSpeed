@@ -11,13 +11,11 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ktc.networkspeed.R;
 
 public class MLinearLayout extends LinearLayout {
-
-    private Animation mScaleBigAnimation;
-    private Animation mScaleSmallAnimation;
 
     public MLinearLayout(Context context) {
         super(context);
@@ -30,17 +28,28 @@ public class MLinearLayout extends LinearLayout {
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+
+        final int count = getChildCount();
+        View view = null;
+        for (int i = 0; i < count; i ++){
+            if (getChildAt(i) instanceof TextView){
+                view = getChildAt(i);
+            }
+        }
+
         if (gainFocus){
             zoomOutWindow();
+            view.setSelected(true);
             Log.d("fengjw", "focus = true");
         }else {
             zoomInWindow();
+            view.setSelected(false);
         }
     }
 
     private void zoomOutWindow() {
         AnimationSet animationSet = new AnimationSet(true);
-        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.1f, 1.0f, 1.1f,
+        ScaleAnimation animation = new ScaleAnimation(1.0f, 1.05f, 1.0f, 1.05f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setDuration(500);
         animation.setFillAfter(true);
@@ -52,7 +61,7 @@ public class MLinearLayout extends LinearLayout {
 
     private void zoomInWindow() {
         AnimationSet animationSet = new AnimationSet(true);
-        ScaleAnimation animation = new ScaleAnimation(1.1f, 1.0f, 1.1f, 1.0f,
+        ScaleAnimation animation = new ScaleAnimation(1.05f, 1.0f, 1.05f, 1.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setDuration(500);
         animation.setFillAfter(true);

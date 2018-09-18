@@ -278,6 +278,13 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
                         try {
                             Log.d("fengjw", "while");
 
+                            //start test
+                            if (!downloadTestStarted) {
+                                Log.d("fengjw", "downloadModel start!");
+                                downloadModel.start();
+                                downloadTestStarted = true;
+                            }
+
                             if (!downloadTestFinished) {
                                 Log.d("fengjw", "downloadTestFinished is false.");
                                 double downloadRate = downloadModel.getInstantDownloadRate();
@@ -329,11 +336,7 @@ public class NetworkSpeedActivity extends AppCompatActivity implements View.OnCl
 
                             Log.d("fengjw", "downloadTestStarted : " + downloadTestStarted);
                             Log.d("fengjw", "downloadTestFinished : " + downloadTestFinished);
-                            //start test
-                            if (!downloadTestStarted) {
-                                downloadModel.start();
-                                downloadTestStarted = true;
-                            }
+
 
                             if (downloadModel.isFinished()) {
                                 Log.d("fengjw", "downloadModel isFinished");
