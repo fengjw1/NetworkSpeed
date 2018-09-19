@@ -36,7 +36,7 @@
         android:background="@drawable/bicycle"
         android:visibility="gone"/>
 
-    <com.ktc.networkspeed.view.DashboardView
+    <com.ktc.tvhelper.networkspeed.view.DashboardView
         android:id="@+id/dv"
         android:padding="50dp"
         android:layout_centerInParent="true"

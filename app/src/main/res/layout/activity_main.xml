@@ -29,7 +29,7 @@
         android:focusableInTouchMode="false"
         android:clickable="false">
 
-    <com.ktc.networkspeed.view.MLinearLayout
+    <com.ktc.tvhelper.networkspeed.view.MLinearLayout
         android:id="@+id/network_home_diagnose_ll"
         android:layout_width="300dp"
         android:layout_height="200dp"
@@ -50,7 +50,7 @@
             android:src="@drawable/network_home_icon_diagnosis"
             android:visibility="visible"/>
 
-        <com.ktc.networkspeed.view.MarqueeText
+        <com.ktc.tvhelper.networkspeed.view.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -64,10 +64,10 @@
             android:textColor="#B2E7C3"
             android:textSize="26sp"/>
 
-    </com.ktc.networkspeed.view.MLinearLayout>
+    </com.ktc.tvhelper.networkspeed.view.MLinearLayout>
 
 
-    <com.ktc.networkspeed.view.MLinearLayout
+    <com.ktc.tvhelper.networkspeed.view.MLinearLayout
         android:id="@+id/network_home_speed_ll"
         android:layout_width="300dp"
         android:layout_height="420dp"
@@ -89,7 +89,7 @@
             android:src="@drawable/network_home_icon_speed"
             android:visibility="visible"/>
 
-        <com.ktc.networkspeed.view.MarqueeText
+        <com.ktc.tvhelper.networkspeed.view.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -102,9 +102,9 @@
             android:textAllCaps="false"
             android:textColor="#B2E7C3"
             android:textSize="26sp"/>
-    </com.ktc.networkspeed.view.MLinearLayout>
+    </com.ktc.tvhelper.networkspeed.view.MLinearLayout>
 
-    <com.ktc.networkspeed.view.MLinearLayout
+    <com.ktc.tvhelper.networkspeed.view.MLinearLayout
         android:id="@+id/network_home_update_ll"
         android:layout_width="300dp"
         android:layout_height="200dp"
@@ -126,7 +126,7 @@
             android:src="@drawable/updatemanager_icon"
             android:visibility="visible"/>
 
-        <com.ktc.networkspeed.view.MarqueeText
+        <com.ktc.tvhelper.networkspeed.view.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -139,9 +139,9 @@
             android:textAllCaps="false"
             android:textColor="#B2E7C3"
             android:textSize="26sp"/>
-    </com.ktc.networkspeed.view.MLinearLayout>
+    </com.ktc.tvhelper.networkspeed.view.MLinearLayout>
 
-    <com.ktc.networkspeed.view.MLinearLayout
+    <com.ktc.tvhelper.networkspeed.view.MLinearLayout
         android:id="@+id/network_home_memory_ll"
         android:layout_width="300dp"
         android:layout_height="200dp"
@@ -162,7 +162,7 @@
             android:src="@drawable/memorymanager_icon"
             android:visibility="visible"/>
 
-        <com.ktc.networkspeed.view.MarqueeText
+        <com.ktc.tvhelper.networkspeed.view.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -175,9 +175,9 @@
             android:textAllCaps="false"
             android:textColor="#B2E7C3"
             android:textSize="26sp"/>
-    </com.ktc.networkspeed.view.MLinearLayout>
+    </com.ktc.tvhelper.networkspeed.view.MLinearLayout>
 
-    <com.ktc.networkspeed.view.MLinearLayout
+    <com.ktc.tvhelper.networkspeed.view.MLinearLayout
         android:id="@+id/network_home_file_ll"
         android:layout_width="300dp"
         android:layout_height="200dp"
@@ -197,7 +197,7 @@
             android:src="@drawable/filemanager_icon"
             android:visibility="visible"/>
 
-        <com.ktc.networkspeed.view.MarqueeText
+        <com.ktc.tvhelper.networkspeed.view.MarqueeText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -210,6 +210,6 @@
             android:textAllCaps="false"
             android:textColor="#B2E7C3"
             android:textSize="26sp"/>
-    </com.ktc.networkspeed.view.MLinearLayout>
+    </com.ktc.tvhelper.networkspeed.view.MLinearLayout>
     </RelativeLayout>
 </LinearLayout>

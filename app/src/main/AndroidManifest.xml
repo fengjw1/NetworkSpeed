@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ktc.networkspeed">
+          package="com.ktc.tvhelper">
     <!--android:sharedUserId="android.uid.system"-->
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.ktc.tvhelper.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -24,17 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ktc.networkdiagnose.NetworkDiagnoseActivity"
+            android:name="com.ktc.tvhelper.networkdiagnose.NetworkDiagnoseActivity"
             android:launchMode="singleTask">
         </activity>
         <activity
-            android:name="com.ktc.networkdiagnose.NetworkDiagnoseResultActivity"
+            android:name="com.ktc.tvhelper.networkdiagnose.NetworkDiagnoseResultActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".NetworkSpeedActivity"
+        <activity android:name="com.ktc.tvhelper.networkspeed.NetworkSpeedActivity"
                   android:launchMode="singleTask">
         </activity>
-        <activity android:name="com.ktc.networkdiagnose.NetworkDiagnoseDiyActivity"
+        <activity android:name="com.ktc.tvhelper.networkdiagnose.NetworkDiagnoseDiyActivity"
                   android:launchMode="singleTask">
         </activity>
     </application>

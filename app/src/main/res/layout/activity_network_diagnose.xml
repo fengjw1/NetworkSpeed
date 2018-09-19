@@ -58,7 +58,7 @@
             android:background="@drawable/network_diagnose_icon_helios_disabled"/>
         </LinearLayout>
 
-        <com.ktc.networkdiagnose.view.LVCircularZoom
+        <com.ktc.tvhelper.networkdiagnose.view.LVCircularZoom
             android:id="@+id/lvzoom1"
             android:layout_width="100dp"
             android:layout_height="wrap_content"/>
@@ -79,7 +79,7 @@
                 android:background="@drawable/network_diagnose_icon_network_disabled"/>
         </LinearLayout>
 
-        <com.ktc.networkdiagnose.view.LVCircularZoom
+        <com.ktc.tvhelper.networkdiagnose.view.LVCircularZoom
             android:id="@+id/lvzoom2"
             android:layout_width="100dp"
             android:layout_height="wrap_content"/>
